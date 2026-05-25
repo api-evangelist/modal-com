@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Modal Schedules API — Schedules
+  description: 'Modal Schedules API — Schedules. Periodic execution for Modal Functions via Cron (cron expression with
+    timezone) or Period (fixed interval).'
+  tags:
+  - Modal
+  - Schedules
+  - Cron
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MODAL_TOKEN_ID: MODAL_TOKEN_ID
+    MODAL_TOKEN_SECRET: MODAL_TOKEN_SECRET
+capability:
+  consumes:
+  - type: http
+    namespace: schedules-schedules
+    baseUri: https://api.modal.com
+    description: Modal Schedules consumed API.
+    resources:
+    - name: schedule
+      path: /v1/schedules/{schedule_id}
+      operations:
+      - name: getSchedule
+        method: GET
+        description: Modal Get Schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: schedule
+          type: object
+          value: $.
+        inputParameters:
+        - name: schedule_id
+          in: path
+          type: string
+          required: true
+    - name: schedule-runs
+      path: /v1/schedules/{schedule_id}/runs
+      operations:
+      - name: listScheduleRuns
+        method: GET
+        description: Modal List Schedule Runs
+        outputRawFormat: json
+        outputParameters:
+        - name: runs
+          type: object
+          value: $.
+        inputParameters:
+        - name: schedule_id
+          in: path
+          type: string
+          required: true
+      - name: triggerSchedule
+        method: POST
+        description: Modal Trigger Schedule Run
+        outputRawFormat: json
+        outputParameters:
+        - name: run
+          type: object
+          value: $.
+        inputParameters:
+        - name: schedule_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.MODAL_TOKEN_ID}}:{{env.MODAL_TOKEN_SECRET}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: schedules-schedules-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Modal Schedules.
+    tools:
+    - name: modal-trigger-schedule
+      description: Manually trigger an immediate run of a scheduled Modal Function.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: schedules-schedules.triggerSchedule
+      with:
+        schedule_id: tools.schedule_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modal-list-schedule-runs
+      description: List historical runs of a Modal schedule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: schedules-schedules.listScheduleRuns
+      with:
+        schedule_id: tools.schedule_id
+      outputParameters:
+      - type: object
+        mapping: $.

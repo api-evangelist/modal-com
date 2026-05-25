@@ -1,0 +1,243 @@
+openapi: 3.1.0
+info:
+  title: Modal Volumes API
+  description: |
+    Modal Volumes — a high-performance distributed file system for Modal
+    applications, optimized for ML workflows. Volumes provide persistent
+    storage that can be attached to Functions and Sandboxes across
+    regions, with explicit commit/reload semantics for write
+    consistency.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+  description: Modal control plane
+tags:
+- name: Volumes
+  description: Volume lifecycle.
+- name: Files
+  description: Volume file operations.
+paths:
+  /volumes:
+    get:
+      tags:
+      - Volumes
+      summary: List Volumes
+      description: List all Modal Volumes in the workspace.
+      operationId: listVolumes
+      responses:
+        '200':
+          description: A page of volumes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Volume'
+    post:
+      tags:
+      - Volumes
+      summary: Create Volume
+      description: Create a new named Modal Volume.
+      operationId: createVolume
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeCreate'
+      responses:
+        '201':
+          description: Volume created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+  /volumes/{volume_name}:
+    get:
+      tags:
+      - Volumes
+      summary: Get Volume
+      description: Retrieve volume metadata by name.
+      operationId: getVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The volume.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+    delete:
+      tags:
+      - Volumes
+      summary: Delete Volume
+      description: Delete a Modal Volume.
+      operationId: deleteVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Volume deleted.
+  /volumes/{volume_name}/files:
+    get:
+      tags:
+      - Files
+      summary: List Volume Files
+      description: List files under a path inside the volume.
+      operationId: listVolumeFiles
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        schema:
+          type: string
+          default: /
+      responses:
+        '200':
+          description: A list of files.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VolumeFile'
+    put:
+      tags:
+      - Files
+      summary: Put Volume File
+      description: Upload a file to the volume at the given path.
+      operationId: putVolumeFile
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '204':
+          description: File uploaded.
+    delete:
+      tags:
+      - Files
+      summary: Remove Volume File
+      description: Remove a file or directory from the volume.
+      operationId: removeVolumeFile
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: recursive
+        in: query
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '204':
+          description: File removed.
+  /volumes/{volume_name}/commits:
+    post:
+      tags:
+      - Volumes
+      summary: Commit Volume Changes
+      description: |
+        Commit pending writes so other readers can see them after a
+        `reload`. Modal recommends limiting concurrent commits to about
+        5 on v1 volumes; v2 supports many more concurrent writers.
+      operationId: commitVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Commit completed.
+components:
+  schemas:
+    Volume:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+          enum: [v1, v2]
+        created_at:
+          type: string
+          format: date-time
+        size_bytes:
+          type: integer
+        inode_count:
+          type: integer
+    VolumeCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+          enum: [v1, v2]
+          default: v2
+    VolumeFile:
+      type: object
+      properties:
+        path:
+          type: string
+        size:
+          type: integer
+        is_dir:
+          type: boolean
+        modified_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []

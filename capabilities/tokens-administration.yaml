@@ -1,0 +1,100 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Modal Tokens and Workspace API
+  description: 'Modal administration surface — token id/secret pairs, environments, and workspace metadata.'
+  tags:
+  - Modal
+  - Administration
+  - Tokens
+  - Workspaces
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MODAL_TOKEN_ID: MODAL_TOKEN_ID
+    MODAL_TOKEN_SECRET: MODAL_TOKEN_SECRET
+capability:
+  consumes:
+  - type: http
+    namespace: tokens-administration
+    baseUri: https://api.modal.com
+    description: Modal Tokens and Workspace consumed API.
+    resources:
+    - name: tokens
+      path: /v1/tokens
+      operations:
+      - name: listTokens
+        method: GET
+        description: Modal List Tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: tokens
+          type: object
+          value: $.
+      - name: createToken
+        method: POST
+        description: Modal Create Token
+        outputRawFormat: json
+        outputParameters:
+        - name: token
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: environments
+      path: /v1/environments
+      operations:
+      - name: listEnvironments
+        method: GET
+        description: Modal List Environments
+        outputRawFormat: json
+        outputParameters:
+        - name: environments
+          type: object
+          value: $.
+    - name: workspace
+      path: /v1/workspaces/current
+      operations:
+      - name: getCurrentWorkspace
+        method: GET
+        description: Modal Get Current Workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: workspace
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      value: '{{env.MODAL_TOKEN_ID}}:{{env.MODAL_TOKEN_SECRET}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: tokens-administration-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Modal administration.
+    tools:
+    - name: modal-list-environments
+      description: List Modal environments in the workspace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tokens-administration.listEnvironments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modal-get-workspace
+      description: Get the current Modal workspace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tokens-administration.getCurrentWorkspace
+      outputParameters:
+      - type: object
+        mapping: $.

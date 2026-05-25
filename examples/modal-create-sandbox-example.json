@@ -1,0 +1,36 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.modal.com/v1/sandboxes",
+    "headers": {
+      "Authorization": "Bearer ak-1234:as-secret",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "app_id": "ap-acme-agents",
+      "image": "im-python-3-12",
+      "entrypoint": ["bash"],
+      "cpu": 1.0,
+      "memory": 2048,
+      "timeout": 600,
+      "idle_timeout": 60,
+      "encrypted_ports": [8080],
+      "tags": { "agent_session": "sess-42" }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "sandbox_id": "sb-7c2dd9b1",
+      "app_id": "ap-acme-agents",
+      "state": "created",
+      "image": "im-python-3-12",
+      "cpu": 1.0,
+      "memory": 2048,
+      "timeout": 600,
+      "idle_timeout": 60,
+      "tags": { "agent_session": "sess-42" },
+      "created_at": "2026-05-25T18:14:30Z"
+    }
+  }
+}

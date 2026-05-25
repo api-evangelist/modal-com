@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/modal-com/main/json-schema/modal-function-schema.json",
+  "title": "Modal Function",
+  "description": "A Modal Function — a serverless Python function backed by an autoscaling container pool, with optional GPU attachment, image, volumes, secrets, and scheduling.",
+  "type": "object",
+  "required": ["function_id", "app_id", "name"],
+  "properties": {
+    "function_id": { "type": "string" },
+    "app_id": { "type": "string" },
+    "name": { "type": "string" },
+    "image": { "type": "string" },
+    "gpu": {
+      "type": "string",
+      "enum": ["T4", "L4", "A10", "L40S", "A100-40GB", "A100-80GB", "RTX-PRO-6000", "H100", "H200", "B200"]
+    },
+    "cpu": { "type": "number", "minimum": 0.125 },
+    "memory": { "type": "integer", "minimum": 128, "description": "MiB of RAM" },
+    "timeout": { "type": "integer", "minimum": 1, "maximum": 86400 },
+    "retries": { "type": "integer", "minimum": 0 },
+    "min_containers": { "type": "integer", "minimum": 0 },
+    "max_containers": { "type": "integer", "minimum": 1 },
+    "buffer_containers": { "type": "integer", "minimum": 0 },
+    "schedule": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string", "enum": ["cron", "period"] },
+        "cron_expression": { "type": "string" },
+        "timezone": { "type": "string" },
+        "period_seconds": { "type": "integer" }
+      }
+    },
+    "web_url": { "type": "string", "format": "uri" },
+    "secrets": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "volumes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

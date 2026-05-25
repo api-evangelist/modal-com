@@ -1,0 +1,103 @@
+vocabulary: Modal
+version: '0.1'
+provider: Modal Labs
+providerId: modal
+created: '2026-05-25'
+modified: '2026-05-25'
+description: |
+  Vocabulary and taxonomy for Modal — the serverless GPU and cloud compute platform. Captures the platform's
+  core concepts (App, Function, Sandbox, Volume, Image, Secret, Dict, Queue, Schedule, WebEndpoint),
+  operational primitives, and pricing surface.
+concepts:
+  - id: app
+    name: App
+    description: The unit of deployment in Modal. Groups Functions, Classes, and bound resources under a name.
+  - id: function
+    name: Function
+    description: A serverless Python function backed by an autoscaling container pool.
+  - id: cls
+    name: Cls
+    description: A serverless Python class supporting parametrization and lifecycle hooks (enter, exit, method).
+  - id: sandbox
+    name: Sandbox
+    description: A secure containerized environment for executing untrusted code at runtime.
+  - id: image
+    name: Image
+    description: A declarative container image specification built lazily by Modal.
+  - id: volume
+    name: Volume
+    description: Distributed persistent storage attached to Functions and Sandboxes.
+  - id: dict
+    name: Dict
+    description: Distributed key-value store for cross-container shared state.
+  - id: queue
+    name: Queue
+    description: Distributed FIFO queue for asynchronous task coordination.
+  - id: secret
+    name: Secret
+    description: Encrypted environment-variable reference injected into Modal containers.
+  - id: schedule
+    name: Schedule
+    description: Periodic execution declaration (Cron or Period) attached to a Function.
+  - id: web-endpoint
+    name: WebEndpoint
+    description: HTTP/ASGI/WSGI surface exposed by a Modal Function.
+  - id: tunnel
+    name: Tunnel
+    description: A networked port exposure from a Sandbox or Function container.
+  - id: function-call
+    name: FunctionCall
+    description: An asynchronous handle to a spawned Function invocation.
+  - id: workspace
+    name: Workspace
+    description: A Modal account container holding tokens, environments, and resource quotas.
+  - id: environment
+    name: Environment
+    description: A scoping namespace inside a workspace (e.g. `dev`, `staging`, `prod`).
+gpus:
+  - nvidia-t4
+  - nvidia-l4
+  - nvidia-a10
+  - nvidia-l40s
+  - nvidia-a100-40gb
+  - nvidia-a100-80gb
+  - nvidia-rtx-pro-6000
+  - nvidia-h100
+  - nvidia-h200
+  - nvidia-b200
+lifecycle:
+  function:
+    - registered
+    - deployed
+    - serving
+    - cold
+    - warm
+    - terminated
+  sandbox:
+    - created
+    - scheduled
+    - started
+    - ready
+    - finished
+    - terminated
+useCases:
+  - inference
+  - fine-tuning
+  - distributed-training
+  - batch-processing
+  - dataset-generation
+  - embeddings
+  - sandboxed-agents
+  - code-execution
+  - web-endpoints
+  - cron-jobs
+tags:
+  - Serverless
+  - GPU
+  - Cloud Compute
+  - AI Infrastructure
+  - Sandboxes
+  - Agents
+  - Inference
+  - Training
+  - Python

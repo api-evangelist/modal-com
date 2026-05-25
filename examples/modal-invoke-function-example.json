@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.modal.com/v1/functions/fn-abcd1234/invocations",
+    "headers": {
+      "Authorization": "Bearer ak-1234:as-secret",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "args": ["claude-sonnet-4-6", "What is the airspeed velocity of an unladen swallow?"],
+      "kwargs": { "temperature": 0.2 }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "call_id": "fc-9f01a2b3",
+      "status": "success",
+      "result": "African or European?",
+      "started_at": "2026-05-25T18:11:02Z",
+      "finished_at": "2026-05-25T18:11:03Z"
+    }
+  }
+}

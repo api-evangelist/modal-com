@@ -1,0 +1,165 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Modal
+providerId: modal
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Serverless
+  - GPU
+  - Cloud Compute
+  - AI Infrastructure
+description: 'Reconciled plans and per-resource pricing for Modal serverless compute. Source: modal.com/pricing.
+  Modal sells a subscription tier with included monthly credits plus pay-as-you-go per-second pricing for CPU,
+  memory, GPU, sandbox, and storage.'
+sources:
+  - https://modal.com/pricing
+  - https://modal.com/docs/guide/cost
+plans:
+  - id: starter
+    name: Starter
+    type: subscription
+    description: Free tier for individual developers. $30 of compute credit included monthly.
+    entries:
+      - label: Monthly fee
+        name: subscription
+        type: fixed
+        metric: subscription
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Included compute credit
+        name: included_credits
+        type: credit
+        metric: usd
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '-30.00'
+        userMultiplied: false
+    limits:
+      - name: containers
+        value: 100
+      - name: gpu_concurrency
+        value: 10
+      - name: cron_jobs
+        value: 5
+      - name: webhooks
+        value: 8
+  - id: team
+    name: Team
+    type: subscription
+    description: Team tier for production workloads with $100 of monthly compute credit and higher quotas.
+    entries:
+      - label: Monthly fee
+        name: subscription
+        type: fixed
+        metric: subscription
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '250.00'
+        userMultiplied: false
+      - label: Included compute credit
+        name: included_credits
+        type: credit
+        metric: usd
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '-100.00'
+        userMultiplied: false
+    limits:
+      - name: containers
+        value: 1000
+      - name: gpu_concurrency
+        value: 50
+      - name: cron_jobs
+        value: -1
+      - name: webhooks
+        value: -1
+  - id: enterprise
+    name: Enterprise
+    type: contract
+    description: Custom-priced contracts with volume discounts, private Slack support, and embedded ML services.
+    entries:
+      - label: Contact sales
+        name: contract
+        type: fixed
+        metric: contract
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: contact
+        userMultiplied: false
+resources:
+  cpu:
+    label: CPU
+    unit: core-second
+    price: '0.0000131'
+    description: Per physical CPU core per second. Minimum 0.125 cores per container.
+  memory:
+    label: Memory
+    unit: gib-second
+    price: '0.00000222'
+    description: Per GiB of RAM per second.
+  storage:
+    label: Volume storage
+    unit: gib-month
+    price: '0.09'
+    description: Modal Volume storage per GiB per month. Includes 1 TiB free per month.
+  sandbox-cpu:
+    label: Sandbox CPU
+    unit: core-second
+    price: '0.00003942'
+    description: Sandbox + Notebooks CPU per core per second.
+  sandbox-memory:
+    label: Sandbox memory
+    unit: gib-second
+    price: '0.00000672'
+    description: Sandbox + Notebooks memory per GiB per second.
+  gpus:
+    - id: nvidia-t4
+      label: NVIDIA T4
+      unit: second
+      price: '0.000164'
+    - id: nvidia-l4
+      label: NVIDIA L4
+      unit: second
+      price: '0.000222'
+    - id: nvidia-a10
+      label: NVIDIA A10
+      unit: second
+      price: '0.000306'
+    - id: nvidia-l40s
+      label: NVIDIA L40S
+      unit: second
+      price: '0.000542'
+    - id: nvidia-a100-40gb
+      label: NVIDIA A100 40GB
+      unit: second
+      price: '0.000583'
+    - id: nvidia-a100-80gb
+      label: NVIDIA A100 80GB
+      unit: second
+      price: '0.000694'
+    - id: nvidia-rtx-pro-6000
+      label: NVIDIA RTX PRO 6000
+      unit: second
+      price: '0.000842'
+    - id: nvidia-h100
+      label: NVIDIA H100
+      unit: second
+      price: '0.001097'
+    - id: nvidia-h200
+      label: NVIDIA H200
+      unit: second
+      price: '0.001261'
+    - id: nvidia-b200
+      label: NVIDIA B200
+      unit: second
+      price: '0.001736'

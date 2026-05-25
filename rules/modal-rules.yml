@@ -1,0 +1,60 @@
+extends: spectral:oas
+formats:
+  - oas3_1
+rules:
+  modal-info-title-set:
+    description: Modal OpenAPI documents must have a descriptive title that mentions Modal.
+    given: $.info.title
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "(?i)modal"
+  modal-info-version-set:
+    description: Modal OpenAPI documents must specify a version.
+    given: $.info
+    severity: error
+    then:
+      field: version
+      function: truthy
+  modal-servers-present:
+    description: Modal OpenAPI documents must declare at least one server.
+    given: $.servers
+    severity: error
+    then:
+      function: length
+      functionOptions:
+        min: 1
+  modal-operation-summary-title-case:
+    description: Operation summaries should use Title Case.
+    given: $.paths..[?(@.summary)]
+    severity: warn
+    then:
+      field: summary
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+  modal-operation-id-camel-case:
+    description: Operation IDs should be camelCase.
+    given: $.paths..[?(@.operationId)]
+    severity: warn
+    then:
+      field: operationId
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+  modal-bearer-security:
+    description: Every Modal operation must require ModalToken bearer auth.
+    given: $.security
+    severity: error
+    then:
+      function: truthy
+  modal-tag-defined:
+    description: All operations must be tagged.
+    given: $.paths..[?(@.tags)]
+    severity: warn
+    then:
+      field: tags
+      function: length
+      functionOptions:
+        min: 1

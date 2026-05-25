@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Modal Web Endpoints API
+  description: 'Modal Web Endpoints — HTTP, ASGI, WSGI, and custom web-server surfaces exposed by Modal Functions.'
+  tags:
+  - Modal
+  - Web Endpoints
+  - HTTP
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    MODAL_TOKEN_ID: MODAL_TOKEN_ID
+    MODAL_TOKEN_SECRET: MODAL_TOKEN_SECRET
+capability:
+  consumes:
+  - type: http
+    namespace: web-endpoints
+    baseUri: https://api.modal.com
+    description: Modal Web Endpoints consumed API.
+    resources:
+    - name: web-endpoints
+      path: /v1/web-endpoints
+      operations:
+      - name: listWebEndpoints
+        method: GET
+        description: Modal List Web Endpoints
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: web-endpoint
+      path: /v1/web-endpoints/{endpoint_id}
+      operations:
+      - name: getWebEndpoint
+        method: GET
+        description: Modal Get Web Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: endpoint
+          type: object
+          value: $.
+        inputParameters:
+        - name: endpoint_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.MODAL_TOKEN_ID}}:{{env.MODAL_TOKEN_SECRET}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: web-endpoints-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Modal Web Endpoints.
+    tools:
+    - name: modal-list-web-endpoints
+      description: List Modal Web Endpoints exposed by Functions.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: web-endpoints.listWebEndpoints
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modal-get-web-endpoint
+      description: Get a single Modal Web Endpoint.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: web-endpoints.getWebEndpoint
+      with:
+        endpoint_id: tools.endpoint_id
+      outputParameters:
+      - type: object
+        mapping: $.

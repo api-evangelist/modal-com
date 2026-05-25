@@ -1,0 +1,54 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Modal
+providerId: modal
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Quotas
+  - Serverless
+  - GPU
+description: |
+  Plan-based quota limits for Modal. Modal does not publish per-request token-bucket rate limits in the public
+  pricing page; instead it caps concurrent containers, GPU concurrency, deployed cron jobs, and deployed
+  webhooks per plan. Enterprise customers negotiate custom limits.
+sources:
+  - https://modal.com/pricing
+  - https://modal.com/docs/guide/scale
+algorithm: concurrency-quota
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+limits:
+  - tier: Starter
+    containers: 100
+    gpuConcurrency: 10
+    cronJobs: 5
+    webhooks: 8
+  - tier: Team
+    containers: 1000
+    gpuConcurrency: 50
+    cronJobs: -1
+    webhooks: -1
+  - tier: Enterprise
+    containers: custom
+    gpuConcurrency: custom
+    cronJobs: custom
+    webhooks: custom
+functionLimits:
+  defaultTimeoutSeconds: 300
+  maxTimeoutSeconds: 86400
+  defaultRetries: 0
+  webEndpointMaxRequestBytes: 4500000000
+sandboxLimits:
+  defaultTimeoutSeconds: 600
+  maxTimeoutSeconds: 86400
+  idleTimeoutDefaultSeconds: 0
+notes:
+  - Modal's authentication uses workspace-scoped token id/secret pairs, not rotating bearer tokens.
+  - Function autoscaling is controlled via min_containers, max_containers, and buffer_containers parameters at deploy time.
+  - GPU concurrency is a hard ceiling — additional GPU requests queue until a slot frees.
+  - Volume v1 recommends ≤ 5 concurrent commits to avoid contention; v2 raises this dramatically.

@@ -1,0 +1,116 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Modal
+providerId: modal
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Serverless
+  - GPU
+description: FOCUS-aligned FinOps definition for Modal serverless compute. Per-second metering of CPU, memory,
+  and GPU plus per-GiB-month volume storage. Subscription credits offset usage charges.
+sources:
+  - https://modal.com/pricing
+  - https://modal.com/docs/guide/cost
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Modal Labs
+serviceCategory: Compute
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Credit
+    - Adjustment
+    - Tax
+  primaryUnit: second
+  secondaryUnits:
+    - core-second
+    - gib-second
+    - gib-month
+focusColumns:
+  ServiceName: Modal
+  ServiceCategory: Compute
+  ProviderName: Modal Labs
+  PublisherName: Modal Labs
+  InvoiceIssuerName: Modal Labs
+  PricingCategory: Usage-Based
+  PricingUnit: second
+  BillingCurrency: USD
+meters:
+  - name: cpu_seconds
+    unit: core-second
+    aggregation: sum
+    dimensions:
+      - workspace
+      - environment
+      - function_name
+      - app_name
+      - tags
+    rate: 0.0000131
+  - name: memory_seconds
+    unit: gib-second
+    aggregation: sum
+    dimensions:
+      - workspace
+      - environment
+      - function_name
+      - app_name
+    rate: 0.00000222
+  - name: gpu_seconds
+    unit: second
+    aggregation: sum
+    dimensions:
+      - gpu_type
+      - workspace
+      - environment
+      - function_name
+      - app_name
+    rates:
+      nvidia-t4: 0.000164
+      nvidia-l4: 0.000222
+      nvidia-a10: 0.000306
+      nvidia-l40s: 0.000542
+      nvidia-a100-40gb: 0.000583
+      nvidia-a100-80gb: 0.000694
+      nvidia-rtx-pro-6000: 0.000842
+      nvidia-h100: 0.001097
+      nvidia-h200: 0.001261
+      nvidia-b200: 0.001736
+  - name: sandbox_cpu_seconds
+    unit: core-second
+    aggregation: sum
+    rate: 0.00003942
+  - name: sandbox_memory_seconds
+    unit: gib-second
+    aggregation: sum
+    rate: 0.00000672
+  - name: volume_storage
+    unit: gib-month
+    aggregation: average
+    rate: 0.09
+    freeAllowance: 1024
+discounts:
+  - id: subscription-credits
+    description: Plan-included compute credits applied against usage charges each month.
+    plans:
+      starter: 30
+      team: 100
+      enterprise: custom
+notes:
+  - Tags applied to Apps via `app.set_tags()` propagate to billing records, enabling per-team/per-feature
+    chargeback.
+  - Egress traffic is included in Modal's listed pricing as of this profile; volume discount tiers apply for
+    Enterprise customers.

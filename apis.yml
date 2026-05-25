@@ -1,0 +1,621 @@
+aid: modal
+url: https://raw.githubusercontent.com/api-evangelist/modal-com/refs/heads/main/apis.yml
+apis:
+- aid: modal:modal-functions-api
+  name: Modal Functions API
+  tags:
+  - Serverless
+  - GPU
+  - Functions
+  - Python
+  humanURL: https://modal.com/docs/guide/apps
+  properties:
+  - url: https://modal.com/docs/guide/apps
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Function
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.App
+    type: Documentation
+  - url: openapi/modal-functions-openapi.yml
+    type: OpenAPI
+  - url: json-schema/modal-function-schema.json
+    type: JSONSchema
+  - url: json-ld/modal-com-context.jsonld
+    type: JSONLD
+  - type: NaftikoCapability
+    url: capabilities/functions-functions.yaml
+  description: Modal Functions are the core serverless primitive — Python functions backed by autoscaling
+    container pools. They support optional GPU attachment (T4 through B200), Modal-built container images,
+    Volumes, Secrets, retries, timeouts, scheduling, web endpoints, dynamic batching, and class-based stateful
+    workers. Invoke synchronously (`.remote()`), asynchronously (`.spawn()`), or as a map (`.map()`).
+- aid: modal:modal-sandboxes-api
+  name: Modal Sandboxes API
+  tags:
+  - Sandboxes
+  - Agents
+  - Code Execution
+  - Isolation
+  humanURL: https://modal.com/docs/guide/sandboxes
+  properties:
+  - url: https://modal.com/docs/guide/sandboxes
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Sandbox
+    type: Documentation
+  - url: openapi/modal-sandboxes-openapi.yml
+    type: OpenAPI
+  - url: json-schema/modal-sandbox-schema.json
+    type: JSONSchema
+  - type: NaftikoCapability
+    url: capabilities/sandboxes-sandboxes.yaml
+  description: Modal Sandboxes are secure containers for executing untrusted user or agent code. Spawned at
+    runtime with `Sandbox.create()`, they support arbitrary command execution, filesystem snapshots, port
+    tunnels, volume mounts, GPU attachment, idle timeouts (up to 24h), readiness probes, named lookup, and
+    tagging. Sandboxes are the workhorse primitive for LLM coding agents and rollout systems on Modal.
+- aid: modal:modal-volumes-api
+  name: Modal Volumes API
+  tags:
+  - Storage
+  - Distributed File System
+  - Persistence
+  humanURL: https://modal.com/docs/guide/volumes
+  properties:
+  - url: https://modal.com/docs/guide/volumes
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Volume
+    type: Documentation
+  - url: openapi/modal-volumes-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/volumes-volumes.yaml
+  description: Modal Volumes provide a high-performance distributed file system optimized for ML workflows.
+    Volumes attach to Functions and Sandboxes via `Volume.from_name()`, support concurrent reads, explicit
+    `commit()` and `reload()` semantics, sub-path mounting, and read-only mounts. Volumes v2 (beta) removes
+    inode limits and supports hundreds of concurrent writers to distinct files.
+- aid: modal:modal-images-api
+  name: Modal Images API
+  tags:
+  - Container Images
+  - Build
+  - Python
+  humanURL: https://modal.com/docs/guide/images
+  properties:
+  - url: https://modal.com/docs/guide/images
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Image
+    type: Documentation
+  - url: openapi/modal-images-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/images-images.yaml
+  description: Modal Images are declarative, layered container image specifications built lazily on Modal's
+    backend. Build from `debian_slim`, `micromamba`, `from_registry`, or `from_dockerfile`; layer
+    `pip_install`, `apt_install`, `run_commands`, `env`, `copy_local_file`, and `copy_local_dir`. Modal caches
+    layers globally so cold starts of identical images are sub-second.
+- aid: modal:modal-secrets-api
+  name: Modal Secrets API
+  tags:
+  - Secrets
+  - Configuration
+  - Environment Variables
+  humanURL: https://modal.com/docs/guide/secrets
+  properties:
+  - url: https://modal.com/docs/guide/secrets
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Secret
+    type: Documentation
+  - url: openapi/modal-secrets-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/secrets-secrets.yaml
+  description: Modal Secrets are encrypted, named bundles of environment variables injected into Functions and
+    Sandboxes at runtime. Manage via dashboard, the `modal secret` CLI, or programmatically with
+    `Secret.from_name()` / `Secret.from_dict()`.
+- aid: modal:modal-dicts-queues-api
+  name: Modal Dicts and Queues API
+  tags:
+  - Dicts
+  - Queues
+  - State
+  - Coordination
+  humanURL: https://modal.com/docs/guide/dicts
+  properties:
+  - url: https://modal.com/docs/guide/dicts
+    type: Documentation
+  - url: https://modal.com/docs/guide/queues
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Dict
+    type: Documentation
+  - url: https://modal.com/docs/reference/modal.Queue
+    type: Documentation
+  - url: openapi/modal-dicts-queues-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/dicts-queues.yaml
+  description: Modal Dicts and Queues are distributed in-memory primitives. `modal.Dict` is a named key-value
+    store; `modal.Queue` is a FIFO queue with optional partitioning and blocking gets. Both are addressable by
+    name across Functions and Sandboxes for cross-container coordination.
+- aid: modal:modal-schedules-api
+  name: Modal Schedules API
+  tags:
+  - Cron
+  - Scheduling
+  - Recurring Jobs
+  humanURL: https://modal.com/docs/guide/cron
+  properties:
+  - url: https://modal.com/docs/guide/cron
+    type: Documentation
+  - url: openapi/modal-schedules-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/schedules-schedules.yaml
+  description: Modal Schedules attach periodic execution to a Function via `@app.function(schedule=modal.Cron(...))`
+    or `modal.Period(...)`. Cron supports full cron syntax with timezone; Period specifies a fixed interval.
+    Past runs appear in the dashboard with manual "run now" support.
+- aid: modal:modal-web-endpoints-api
+  name: Modal Web Endpoints API
+  tags:
+  - Web
+  - HTTP
+  - ASGI
+  - WSGI
+  - FastAPI
+  humanURL: https://modal.com/docs/guide/webhooks
+  properties:
+  - url: https://modal.com/docs/guide/webhooks
+    type: Documentation
+  - url: https://modal.com/docs/guide/webhook-urls
+    type: Documentation
+  - url: https://modal.com/docs/guide/webhook-proxy-auth
+    type: Documentation
+  - url: openapi/modal-web-endpoints-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/web-endpoints.yaml
+  description: Modal Web Endpoints expose Functions over HTTP via `@modal.fastapi_endpoint`, `@modal.asgi_app`
+    (FastAPI/Starlette/FastHTML), `@modal.wsgi_app` (Flask/Django), or `@modal.web_server` (any port-binding
+    server). Supports streaming, WebSockets, proxy-auth tokens, custom URL labels, and live development via
+    `modal serve`.
+- aid: modal:modal-tokens-api
+  name: Modal Tokens and Administration API
+  tags:
+  - Administration
+  - Tokens
+  - Workspaces
+  - Environments
+  humanURL: https://modal.com/docs/reference/cli/token
+  properties:
+  - url: https://modal.com/docs/reference/cli/token
+    type: Documentation
+  - url: https://modal.com/docs/reference/cli/profile
+    type: Documentation
+  - url: https://modal.com/docs/guide/environments
+    type: Documentation
+  - url: openapi/modal-tokens-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/tokens-administration.yaml
+  description: Administrative surface for Modal — token id/secret pair creation and revocation, environment
+    management (e.g. `dev`/`staging`/`prod`), and workspace metadata. Tokens authenticate the `modal` CLI and
+    the Python/TypeScript/Go SDKs against the control plane at `api.modal.com`.
+name: Modal
+tags:
+- Serverless
+- GPU
+- Cloud Compute
+- AI Infrastructure
+- Sandboxes
+- Inference
+- Training
+- Batch Processing
+- Python
+- TypeScript
+- Go
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- type: Portal
+  url: https://modal.com
+- type: Documentation
+  url: https://modal.com/docs
+- type: GettingStarted
+  url: https://modal.com/docs/guide
+- url: https://modal.com/docs/examples
+  name: Modal Examples Gallery
+  type: CodeExamples
+- url: https://modal.com/docs/reference
+  name: Python SDK Reference
+  type: Documentation
+- url: https://modal.com/blog
+  type: Blog
+- url: https://modal.com/changelog
+  type: ChangeLog
+- url: https://status.modal.com
+  type: StatusPage
+- url: https://modal.com/legal/terms
+  type: TermsOfService
+- url: https://modal.com/legal/privacy
+  type: PrivacyPolicy
+- url: https://trust.modal.com
+  type: TrustCenter
+- url: https://modal.com/signup
+  type: SignUp
+- url: https://modal.com/login
+  type: SignUp
+- url: https://modal.com/support
+  type: Support
+- url: https://modal.com/slack
+  name: Modal Slack Community
+  type: Forum
+- url: https://twitter.com/modal_labs
+  type: Twitter
+- url: https://www.linkedin.com/company/modal-labs
+  type: LinkedIn
+- url: https://github.com/modal-labs
+  type: GitHubOrganization
+- url: https://github.com/modal-labs/modal-client
+  name: Modal Python SDK (modal-client)
+  type: SDK
+- url: https://github.com/modal-labs/libmodal
+  name: Modal JavaScript/TypeScript and Go SDKs (libmodal)
+  type: SDK
+- url: https://github.com/modal-labs/modal-examples
+  name: Modal Examples
+  type: CodeExamples
+- url: https://github.com/modal-labs/multinode-training-guide
+  name: Multi-Node Training Guide
+  type: CodeExamples
+- url: https://github.com/modal-labs/awesome-modal
+  name: Awesome Modal
+  type: Documentation
+- url: https://github.com/modal-labs/synchronicity
+  name: Synchronicity (async/sync interop)
+  type: Tool
+- url: https://github.com/modal-labs/quillman
+  name: QuiLLMan voice chat demo
+  type: CodeExamples
+- url: https://github.com/modal-labs/turbo-art
+  name: Turbo Art (SDXL Turbo demo)
+  type: CodeExamples
+- url: https://github.com/modal-labs/ci-on-modal
+  name: CI on Modal sample
+  type: CodeExamples
+- url: https://github.com/modal-labs/vercel-integration-example
+  name: Modal Vercel Integration example
+  type: Integrations
+- url: https://github.com/modal-labs/credential-injection
+  name: Credential injection recipe for Sandboxes
+  type: CodeExamples
+- url: https://github.com/modal-labs/gpu-glossary
+  name: Modal GPU Glossary
+  type: Documentation
+- url: https://github.com/modal-labs/stopwatch
+  name: Stopwatch LLM benchmarking tool
+  type: Tool
+- url: https://pypi.org/project/modal/
+  name: modal on PyPI
+  type: Package
+- url: https://www.npmjs.com/package/modal
+  name: modal on npm
+  type: Package
+- url: https://modal.com/docs/reference/cli/run
+  name: modal CLI reference
+  type: Tool
+- url: https://modal.com/docs/guide/gpu
+  type: Documentation
+- url: https://modal.com/docs/guide/scale
+  type: Documentation
+- url: https://modal.com/docs/guide/cold-start
+  type: Documentation
+- url: https://modal.com/docs/guide/memory-snapshots
+  type: Documentation
+- url: https://modal.com/docs/guide/retries
+  type: Documentation
+- url: https://modal.com/docs/guide/timeouts
+  type: Documentation
+- url: https://modal.com/docs/guide/preemption
+  type: Documentation
+- url: https://modal.com/docs/guide/tunnels
+  type: Documentation
+- url: https://modal.com/docs/guide/cloud-bucket-mounts
+  type: Documentation
+- url: https://modal.com/docs/guide/notebooks
+  type: Documentation
+- url: https://modal.com/docs/guide/private-vpc
+  type: Documentation
+- url: https://modal.com/docs/guide/region-selection
+  type: Documentation
+- url: https://modal.com/docs/guide/managing-deployments
+  type: Documentation
+- url: https://modal.com/docs/guide/observability
+  type: Documentation
+- url: https://modal.com/docs/guide/security
+  type: Documentation
+- url: https://modal.com/pricing
+  data:
+  - id: starter
+    name: Starter
+    entries:
+    - geo: US
+      unit: 1
+      label: User
+      limit: 1
+      price: Free
+      metric: user
+      timeFrame: month
+      description: Free tier with $30 monthly compute credit.
+    elements:
+    - name: $30 monthly compute credit included
+    - name: Up to 100 concurrent containers
+    - name: Up to 10 concurrent GPUs
+    - name: 5 deployed cron jobs
+    - name: 8 deployed web endpoints
+    description: Free for individual developers.
+  - id: team
+    name: Team
+    entries:
+    - geo: US
+      unit: 1
+      label: Workspace
+      limit: 1
+      price: 250
+      metric: workspace
+      timeFrame: month
+      description: Team tier with $100 monthly compute credit and higher quotas.
+    elements:
+    - name: $100 monthly compute credit included
+    - name: Up to 1,000 concurrent containers
+    - name: Up to 50 concurrent GPUs
+    - name: Unlimited cron jobs and web endpoints
+    - name: Team collaboration
+    description: For teams running production workloads.
+  - id: enterprise
+    name: Enterprise
+    entries:
+    - geo: US
+      unit: 1
+      label: Workspace
+      limit: 1
+      price: Call
+      metric: workspace
+      timeFrame: month
+      description: Custom-priced enterprise contracts with volume discounts and private support.
+    elements:
+    - name: Volume discounts on compute
+    - name: Custom container and GPU concurrency limits
+    - name: Embedded ML services
+    - name: Private Slack support channel
+    - name: Negotiable SLAs and security review
+    description: For organizations operating at scale.
+  name: Plans
+  type: Plans
+- url: https://modal.com/pricing
+  data:
+  - id: cpu
+    name: CPU
+    type: Compute
+    entries:
+    - geo: US
+      unit: 1
+      label: Per core per second
+      price: 0.0000131
+      metric: core-second
+      timeFrame: usage
+      description: Per physical CPU core per second. Minimum 0.125 cores per container.
+    description: Per-second CPU pricing for Modal Functions.
+  - id: memory
+    name: Memory
+    type: Compute
+    entries:
+    - geo: US
+      unit: 1
+      label: Per GiB per second
+      price: 0.00000222
+      metric: gib-second
+      timeFrame: usage
+    description: Per-second memory pricing for Modal Functions.
+  - id: gpu-t4
+    name: NVIDIA T4
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000164
+      metric: gpu-second
+      timeFrame: usage
+    description: 16GB Turing GPU for cost-sensitive inference.
+  - id: gpu-l4
+    name: NVIDIA L4
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000222
+      metric: gpu-second
+      timeFrame: usage
+    description: 24GB Ada Lovelace GPU.
+  - id: gpu-a10
+    name: NVIDIA A10
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000306
+      metric: gpu-second
+      timeFrame: usage
+    description: 24GB Ampere GPU.
+  - id: gpu-l40s
+    name: NVIDIA L40S
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000542
+      metric: gpu-second
+      timeFrame: usage
+    description: 48GB Ada Lovelace GPU.
+  - id: gpu-a100-40gb
+    name: NVIDIA A100 40GB
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000583
+      metric: gpu-second
+      timeFrame: usage
+    description: 40GB Ampere GPU.
+  - id: gpu-a100-80gb
+    name: NVIDIA A100 80GB
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000694
+      metric: gpu-second
+      timeFrame: usage
+    description: 80GB Ampere GPU.
+  - id: gpu-rtx-pro-6000
+    name: NVIDIA RTX PRO 6000
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.000842
+      metric: gpu-second
+      timeFrame: usage
+    description: 96GB Ada Lovelace workstation GPU.
+  - id: gpu-h100
+    name: NVIDIA H100
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.001097
+      metric: gpu-second
+      timeFrame: usage
+    description: 80GB Hopper GPU for training and LLM inference.
+  - id: gpu-h200
+    name: NVIDIA H200
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.001261
+      metric: gpu-second
+      timeFrame: usage
+    description: 141GB Hopper GPU with HBM3e memory.
+  - id: gpu-b200
+    name: NVIDIA B200
+    type: GPU
+    entries:
+    - geo: US
+      unit: 1
+      label: Per second
+      price: 0.001736
+      metric: gpu-second
+      timeFrame: usage
+    description: Blackwell GPU — Modal's most powerful tier.
+  - id: storage
+    name: Volume Storage
+    type: Storage
+    entries:
+    - geo: US
+      unit: 1
+      label: Per GiB per month
+      price: 0.09
+      metric: gib-month
+      timeFrame: month
+      description: 1 TiB included free monthly.
+    description: Modal Volume persistent storage.
+  - id: sandbox-cpu
+    name: Sandbox CPU
+    type: Sandbox
+    entries:
+    - geo: US
+      unit: 1
+      label: Per core per second
+      price: 0.00003942
+      metric: core-second
+      timeFrame: usage
+    description: Per-second CPU pricing for Modal Sandboxes and Notebooks.
+  - id: sandbox-memory
+    name: Sandbox Memory
+    type: Sandbox
+    entries:
+    - geo: US
+      unit: 1
+      label: Per GiB per second
+      price: 0.00000672
+      metric: gib-second
+      timeFrame: usage
+    description: Per-second memory pricing for Modal Sandboxes and Notebooks.
+  name: Pricing
+  type: Pricing
+- url: plans/modal-plans-pricing.yml
+  type: Plans
+- url: rate-limits/modal-rate-limits.yml
+  type: RateLimits
+- url: finops/modal-finops.yml
+  type: FinOps
+- url: vocabulary/modal-com-vocabulary.yml
+  type: Vocabulary
+- url: rules/modal-rules.yml
+  type: SpectralRules
+- type: Features
+  data:
+  - Serverless Python functions with sub-second cold starts and autoscaling container pools
+  - GPU compute across T4, L4, A10, L40S, A100 40/80GB, RTX PRO 6000, H100, H200, and B200
+  - Modal Sandboxes for executing untrusted user/agent code with full container isolation
+  - Declarative Image builder with layered caching (pip_install, apt_install, run_commands, from_registry, from_dockerfile)
+  - Modal Volumes — distributed file system with commit/reload semantics; v2 supports many concurrent writers
+  - Cloud bucket mounts for S3, GCS, R2, and Azure
+  - Dicts and Queues for cross-container shared state and coordination
+  - Modal Secrets for encrypted environment-variable injection
+  - Modal Cron and Period schedules with timezone support
+  - Web Endpoints via FastAPI, ASGI, WSGI, and custom web servers — streaming and WebSockets
+  - Proxy-auth tokens, custom URL labels, and live development with `modal serve`
+  - `modal run`, `modal deploy`, `modal serve`, `modal shell`, `modal container exec` CLI workflows
+  - Python SDK (`modal`) plus JavaScript/TypeScript and Go SDKs via `libmodal`
+  - Modal Notebooks for interactive development with GPU attachment
+  - Multi-node distributed training with gang scheduling
+  - Memory snapshots and warm pools for sub-second cold starts on large models
+  - Per-second metered billing for CPU, memory, and GPU with tag-based chargeback
+  - Plan-based concurrency quotas (containers, GPUs, cron jobs, web endpoints)
+  - Token id/secret authentication scoped to workspace and environment
+  - Static outbound IP via `modal.Proxy` for IP-allowlisted integrations
+  - Tunnels and port forwarding for sandbox networking
+  - SOC 2 Type II certified
+  sources:
+  - https://modal.com
+  - https://modal.com/docs
+  - https://modal.com/docs/guide
+  - https://modal.com/docs/reference
+  - https://modal.com/pricing
+  - https://github.com/modal-labs
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Consuming
+description: Modal is a serverless cloud platform for AI and data workloads. Modal lets developers write
+  ordinary Python and run it on remote GPUs and CPUs with sub-second cold starts, instant autoscaling, and
+  declarative container images. The platform's primitives — Functions, Sandboxes, Volumes, Images, Secrets,
+  Dicts, Queues, Schedules, and Web Endpoints — cover inference, fine-tuning, multi-node training, batch
+  processing, agent code execution, and HTTP/web APIs. Modal sells per-second metered compute across the full
+  NVIDIA GPU lineup (T4 → B200) under Starter, Team, and Enterprise plans. Modal Labs raised a $355M Series C
+  in 2026 and is used in production by Decagon, Runway, Physical Intelligence, Suno, Chai Discovery, Lovable,
+  Quora, Reducto, and many others.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

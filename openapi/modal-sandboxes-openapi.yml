@@ -1,0 +1,346 @@
+openapi: 3.1.0
+info:
+  title: Modal Sandboxes API
+  description: |
+    Modal Sandboxes — secure containers for executing untrusted user or
+    agent code. Sandboxes expose long-running, isolated environments that
+    can execute commands, mount volumes, expose tunnels, and snapshot
+    their filesystem state. Sandboxes are the workhorse primitive
+    underneath LLM-driven coding agents and rollout systems.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+  license:
+    name: Modal Terms of Service
+    url: https://modal.com/legal/terms
+servers:
+- url: https://api.modal.com/v1
+  description: Modal control plane
+tags:
+- name: Sandboxes
+  description: Sandbox lifecycle and management.
+- name: Execution
+  description: Process execution inside sandboxes.
+- name: Filesystem
+  description: Sandbox filesystem operations.
+paths:
+  /sandboxes:
+    get:
+      tags:
+      - Sandboxes
+      summary: List Sandboxes
+      description: List all sandboxes in the current environment.
+      operationId: listSandboxes
+      parameters:
+      - name: app_id
+        in: query
+        schema:
+          type: string
+      - name: tag
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of sandboxes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Sandbox'
+    post:
+      tags:
+      - Sandboxes
+      summary: Create Sandbox
+      description: |
+        Create a new Sandbox with the given image, resources, and
+        optional entrypoint command. Sandboxes start in `Created` state
+        and transition through `Scheduled`, `Started`, `Ready`, and
+        terminal states.
+      operationId: createSandbox
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SandboxCreate'
+      responses:
+        '201':
+          description: Sandbox created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+  /sandboxes/{sandbox_id}:
+    get:
+      tags:
+      - Sandboxes
+      summary: Get Sandbox
+      description: Retrieve a single Sandbox by ID.
+      operationId: getSandbox
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Sandbox.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sandbox'
+    delete:
+      tags:
+      - Sandboxes
+      summary: Terminate Sandbox
+      description: Terminate a Sandbox and free its resources.
+      operationId: terminateSandbox
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Sandbox terminated.
+  /sandboxes/{sandbox_id}/exec:
+    post:
+      tags:
+      - Execution
+      summary: Execute Sandbox Command
+      description: |
+        Execute a command inside the Sandbox. Returns a process handle
+        with streamed stdout/stderr and an eventual exit code.
+      operationId: execSandbox
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecRequest'
+      responses:
+        '200':
+          description: Process started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerProcess'
+  /sandboxes/{sandbox_id}/snapshot:
+    post:
+      tags:
+      - Sandboxes
+      summary: Snapshot Sandbox Filesystem
+      description: Capture the Sandbox filesystem state as a reusable image.
+      operationId: snapshotSandbox
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Snapshot image created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  image_id:
+                    type: string
+  /sandboxes/{sandbox_id}/tunnels:
+    get:
+      tags:
+      - Sandboxes
+      summary: List Sandbox Tunnels
+      description: Retrieve tunnel metadata for the Sandbox keyed by container port.
+      operationId: listTunnels
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tunnels for the Sandbox.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Tunnel'
+  /sandboxes/{sandbox_id}/files:
+    get:
+      tags:
+      - Filesystem
+      summary: Read Sandbox File
+      description: Read a file inside the Sandbox at the given path.
+      operationId: readSandboxFile
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File contents.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    put:
+      tags:
+      - Filesystem
+      summary: Write Sandbox File
+      description: Write a file inside the Sandbox at the given path.
+      operationId: writeSandboxFile
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '204':
+          description: File written.
+components:
+  schemas:
+    Sandbox:
+      type: object
+      properties:
+        sandbox_id:
+          type: string
+        app_id:
+          type: string
+        state:
+          type: string
+          enum: [created, scheduled, started, ready, finished, terminated]
+        image:
+          type: string
+        gpu:
+          type: string
+        cpu:
+          type: number
+        memory:
+          type: integer
+        timeout:
+          type: integer
+        idle_timeout:
+          type: integer
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+    SandboxCreate:
+      type: object
+      properties:
+        app_id:
+          type: string
+        image:
+          type: string
+        entrypoint:
+          type: array
+          items:
+            type: string
+        cpu:
+          type: number
+        memory:
+          type: integer
+        gpu:
+          type: string
+        timeout:
+          type: integer
+        idle_timeout:
+          type: integer
+        encrypted_ports:
+          type: array
+          items:
+            type: integer
+        unencrypted_ports:
+          type: array
+          items:
+            type: integer
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+    ExecRequest:
+      type: object
+      required: [command]
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+        workdir:
+          type: string
+        stdin:
+          type: string
+          format: byte
+        env:
+          type: object
+          additionalProperties:
+            type: string
+    ContainerProcess:
+      type: object
+      properties:
+        process_id:
+          type: string
+        sandbox_id:
+          type: string
+        returncode:
+          type: integer
+          nullable: true
+    Tunnel:
+      type: object
+      properties:
+        host:
+          type: string
+        port:
+          type: integer
+        url:
+          type: string
+          format: uri
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []
