@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Sandboxes API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sandboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/sandboxes",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all sandboxes in the current environment."
+        },
+        {
+          "info": {
+            "name": "Create Sandbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/sandboxes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Sandbox with the given image, resources, and\noptional entrypoint command. Sandboxes start in `Created` state\nand transition through `Scheduled`, `Started`, `Ready`, and\nterminal states.\n"
+        },
+        {
+          "info": {
+            "name": "Get Sandbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a single Sandbox by ID."
+        },
+        {
+          "info": {
+            "name": "Terminate Sandbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Terminate a Sandbox and free its resources."
+        },
+        {
+          "info": {
+            "name": "Snapshot Sandbox Filesystem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/snapshot",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Capture the Sandbox filesystem state as a reusable image."
+        },
+        {
+          "info": {
+            "name": "List Sandbox Tunnels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/tunnels",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve tunnel metadata for the Sandbox keyed by container port."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Execution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute Sandbox Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/exec",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a command inside the Sandbox. Returns a process handle\nwith streamed stdout/stderr and an eventual exit code.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Filesystem",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read Sandbox File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/files",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Read a file inside the Sandbox at the given path."
+        },
+        {
+          "info": {
+            "name": "Write Sandbox File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/files",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Write a file inside the Sandbox at the given path."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

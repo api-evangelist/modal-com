@@ -1,0 +1,317 @@
+{
+  "item": [
+    {
+      "id": "2d57614d-7e78-40bd-addd-ade5cc79815b",
+      "name": "WebEndpoints",
+      "description": {
+        "content": "HTTP/ASGI/WSGI web endpoints backed by Modal Functions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b8804f0-de83-4868-996b-4b9d596b238a",
+          "name": "List Web Endpoints",
+          "request": {
+            "name": "List Web Endpoints",
+            "description": {},
+            "url": {
+              "path": [
+                "web-endpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2406cc04-7461-4b0f-8628-453d6d6aef5d",
+              "name": "A page of web endpoints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "web-endpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"endpoint_id\": \"string\",\n      \"function_id\": \"string\",\n      \"kind\": \"wsgi_app\",\n      \"url\": \"http://dKsKmNwiFEKlAzXEeltXzmiNZJR.ylwandEpIB4RlujQevjrW+\",\n      \"custom_label\": \"string\",\n      \"auth\": \"custom\",\n      \"methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"2015-12-16T09:39:00.020Z\"\n    },\n    {\n      \"endpoint_id\": \"string\",\n      \"function_id\": \"string\",\n      \"kind\": \"fastapi_endpoint\",\n      \"url\": \"http://QJudeEYpVz.vqqiaz2ByO2OynhMEgA\",\n      \"custom_label\": \"string\",\n      \"auth\": \"proxy_token\",\n      \"methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created_at\": \"1983-09-14T13:27:51.548Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e759dc3a-490e-44ee-a0a8-94bec28815fd",
+          "name": "Get Web Endpoint",
+          "request": {
+            "name": "Get Web Endpoint",
+            "description": {},
+            "url": {
+              "path": [
+                "web-endpoints",
+                ":endpoint_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpoint_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a72a351-a10c-4a22-8b66-ec8a4a239f7f",
+              "name": "The web endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "web-endpoints",
+                    ":endpoint_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpoint_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpoint_id\": \"string\",\n  \"function_id\": \"string\",\n  \"kind\": \"asgi_app\",\n  \"url\": \"http://zFPUhCCN.ueu0zGq5YzNe5ciVpVXS-YYB.oqtErI4unkJZZPtBNH\",\n  \"custom_label\": \"string\",\n  \"auth\": \"none\",\n  \"methods\": [\n    \"string\",\n    \"string\"\n  ],\n  \"created_at\": \"2025-05-22T11:55:49.512Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eac677f9-11b9-45a7-9059-8be2b5d61c14",
+          "name": "Set Web Endpoint Custom URL Label",
+          "request": {
+            "name": "Set Web Endpoint Custom URL Label",
+            "description": {},
+            "url": {
+              "path": [
+                "web-endpoints",
+                ":endpoint_id",
+                "labels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpoint_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ec5b7d8-b5b6-4ddd-9246-0a5d7f75f660",
+              "name": "Label set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "web-endpoints",
+                    ":endpoint_id",
+                    "labels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpoint_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22653db1-f39e-486d-902d-1aa4515f5d1c",
+    "name": "Modal Web Endpoints API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Web Endpoints — HTTP, ASGI, and WSGI surfaces exposed by Modal\nFunctions. Web Endpoints are produced by decorating a Modal Function\nwith `@modal.fastapi_endpoint`, `@modal.asgi_app`, `@modal.wsgi_app`,\nor `@modal.web_server` and are served from a Modal-issued URL.\nStreaming responses, WebSockets, and proxy-auth tokens are supported.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

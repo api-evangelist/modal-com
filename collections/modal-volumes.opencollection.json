@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Volumes API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/volumes"
+          },
+          "docs": "List all Modal Volumes in the workspace."
+        },
+        {
+          "info": {
+            "name": "Create Volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new named Modal Volume."
+        },
+        {
+          "info": {
+            "name": "Get Volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/volumes/:volume_name",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve volume metadata by name."
+        },
+        {
+          "info": {
+            "name": "Delete Volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/volumes/:volume_name",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a Modal Volume."
+        },
+        {
+          "info": {
+            "name": "Commit Volume Changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/commits",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Commit pending writes so other readers can see them after a\n`reload`. Modal recommends limiting concurrent commits to about\n5 on v1 volumes; v2 supports many more concurrent writers.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Volume Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List files under a path inside the volume."
+        },
+        {
+          "info": {
+            "name": "Put Volume File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Upload a file to the volume at the given path."
+        },
+        {
+          "info": {
+            "name": "Remove Volume File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recursive",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Remove a file or directory from the volume."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,230 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Functions API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/apps",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all Modal apps in the current workspace and environment."
+        },
+        {
+          "info": {
+            "name": "Create App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new ephemeral or deployed Modal app."
+        },
+        {
+          "info": {
+            "name": "Get App",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/apps/:app_id",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a single Modal app by ID."
+        },
+        {
+          "info": {
+            "name": "Stop App",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/apps/:app_id",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop a running Modal app and tear down its containers."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Functions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Functions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/apps/:app_id/functions",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all Functions registered in the given app."
+        },
+        {
+          "info": {
+            "name": "Get Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/functions/:function_id",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a Modal Function by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invocations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Invocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/functions/:function_id/invocations",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List recent invocations for the given Function."
+        },
+        {
+          "info": {
+            "name": "Invoke Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/functions/:function_id/invocations",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Synchronously invoke a Modal Function. The request body is the\nserialized argument payload; the response contains the\nserialized return value or an invocation error.\n"
+        },
+        {
+          "info": {
+            "name": "Spawn Asynchronous Invocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/functions/:function_id/spawn",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Spawn an asynchronous Function call and return a FunctionCall\nhandle. The result is fetched later via the FunctionCall ID.\n"
+        },
+        {
+          "info": {
+            "name": "Get Function Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/function-calls/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and result of an async FunctionCall."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

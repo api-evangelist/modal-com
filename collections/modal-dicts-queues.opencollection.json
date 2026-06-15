@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dicts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Dicts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/dicts"
+          },
+          "docs": "List Dicts"
+        },
+        {
+          "info": {
+            "name": "Create Dict",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/dicts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Dict"
+        },
+        {
+          "info": {
+            "name": "Get Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Dict Entry"
+        },
+        {
+          "info": {
+            "name": "Put Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Put Dict Entry"
+        },
+        {
+          "info": {
+            "name": "Delete Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Dict Entry"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Queues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Queues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/queues"
+          },
+          "docs": "List Queues"
+        },
+        {
+          "info": {
+            "name": "Create Queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/queues",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Queue"
+        },
+        {
+          "info": {
+            "name": "Put Queue Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/queues/:queue_name/messages",
+            "params": [
+              {
+                "name": "queue_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Put Queue Message"
+        },
+        {
+          "info": {
+            "name": "Get Queue Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/queues/:queue_name/messages",
+            "params": [
+              {
+                "name": "queue_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "partition",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "block",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get and remove the next message from the queue."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
