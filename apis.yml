@@ -229,14 +229,14 @@ common:
   - url: https://trust.modal.com
     type: TrustCenter
   - url: https://modal.com/signup
-    type: SignUp
+    type: Signup
   - url: https://modal.com/login
-    type: SignUp
+    type: Signup
   - url: https://modal.com/support
     type: Support
   - url: https://modal.com/slack
     name: Modal Slack Community
-    type: Forum
+    type: Forums
   - url: https://twitter.com/modal_labs
     type: Twitter
   - url: https://www.linkedin.com/company/modal-labs
@@ -245,10 +245,10 @@ common:
     type: GitHubOrganization
   - url: https://github.com/modal-labs/modal-client
     name: Modal Python SDK (modal-client)
-    type: SDK
+    type: SDKs
   - url: https://github.com/modal-labs/libmodal
     name: Modal JavaScript/TypeScript and Go SDKs (libmodal)
-    type: SDK
+    type: SDKs
   - url: https://github.com/modal-labs/modal-examples
     name: Modal Examples
     type: CodeExamples
@@ -260,7 +260,7 @@ common:
     type: Documentation
   - url: https://github.com/modal-labs/synchronicity
     name: Synchronicity (async/sync interop)
-    type: Tool
+    type: Tools
   - url: https://github.com/modal-labs/quillman
     name: QuiLLMan voice chat demo
     type: CodeExamples
@@ -281,7 +281,7 @@ common:
     type: Documentation
   - url: https://github.com/modal-labs/stopwatch
     name: Stopwatch LLM benchmarking tool
-    type: Tool
+    type: Tools
   - url: https://pypi.org/project/modal/
     name: modal on PyPI
     type: Package
@@ -290,7 +290,7 @@ common:
     type: Package
   - url: https://modal.com/docs/reference/cli/run
     name: modal CLI reference
-    type: Tool
+    type: Tools
   - url: https://modal.com/docs/guide/gpu
     type: Documentation
   - url: https://modal.com/docs/guide/scale
