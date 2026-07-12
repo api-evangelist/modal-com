@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/modal-dicts-queues-openapi.yml, openapi/modal-functions-openapi.yml, openapi/modal-images-openapi.yml,
+  openapi/modal-sandboxes-openapi.yml, openapi/modal-schedules-openapi.yml, openapi/modal-secrets-openapi.yml,
+  openapi/modal-tokens-openapi.yml, openapi/modal-volumes-openapi.yml, openapi/modal-web-endpoints-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: ModalToken
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/modal-dicts-queues-openapi.yml
+  - openapi/modal-functions-openapi.yml
+  - openapi/modal-images-openapi.yml
+  - openapi/modal-sandboxes-openapi.yml
+  - openapi/modal-schedules-openapi.yml
+  - openapi/modal-secrets-openapi.yml
+  - openapi/modal-tokens-openapi.yml
+  - openapi/modal-volumes-openapi.yml
+  - openapi/modal-web-endpoints-openapi.yml
