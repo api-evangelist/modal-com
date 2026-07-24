@@ -1,0 +1,88 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Execution API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Execution
+  description: Process execution inside sandboxes.
+paths:
+  /sandboxes/{sandbox_id}/exec:
+    post:
+      tags:
+      - Execution
+      summary: Execute Sandbox Command
+      description: 'Execute a command inside the Sandbox. Returns a process handle
+
+        with streamed stdout/stderr and an eventual exit code.
+
+        '
+      operationId: execSandbox
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecRequest'
+      responses:
+        '200':
+          description: Process started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerProcess'
+components:
+  schemas:
+    ExecRequest:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+        workdir:
+          type: string
+        stdin:
+          type: string
+          format: byte
+        env:
+          type: object
+          additionalProperties:
+            type: string
+    ContainerProcess:
+      type: object
+      properties:
+        process_id:
+          type: string
+        sandbox_id:
+          type: string
+        returncode:
+          type: integer
+          nullable: true
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

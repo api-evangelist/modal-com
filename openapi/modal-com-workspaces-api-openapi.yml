@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Workspaces API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Workspaces
+  description: Modal workspaces.
+paths:
+  /workspaces/current:
+    get:
+      tags:
+      - Workspaces
+      summary: Get Current Workspace
+      operationId: getCurrentWorkspace
+      responses:
+        '200':
+          description: The current workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+components:
+  schemas:
+    Workspace:
+      type: object
+      properties:
+        workspace_id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+          enum:
+          - starter
+          - team
+          - enterprise
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

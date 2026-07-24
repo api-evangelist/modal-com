@@ -1,0 +1,157 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Volumes API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Volumes
+  description: Volume lifecycle.
+paths:
+  /volumes:
+    get:
+      tags:
+      - Volumes
+      summary: List Volumes
+      description: List all Modal Volumes in the workspace.
+      operationId: listVolumes
+      responses:
+        '200':
+          description: A page of volumes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Volume'
+    post:
+      tags:
+      - Volumes
+      summary: Create Volume
+      description: Create a new named Modal Volume.
+      operationId: createVolume
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeCreate'
+      responses:
+        '201':
+          description: Volume created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+  /volumes/{volume_name}:
+    get:
+      tags:
+      - Volumes
+      summary: Get Volume
+      description: Retrieve volume metadata by name.
+      operationId: getVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The volume.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+    delete:
+      tags:
+      - Volumes
+      summary: Delete Volume
+      description: Delete a Modal Volume.
+      operationId: deleteVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Volume deleted.
+  /volumes/{volume_name}/commits:
+    post:
+      tags:
+      - Volumes
+      summary: Commit Volume Changes
+      description: 'Commit pending writes so other readers can see them after a
+
+        `reload`. Modal recommends limiting concurrent commits to about
+
+        5 on v1 volumes; v2 supports many more concurrent writers.
+
+        '
+      operationId: commitVolume
+      parameters:
+      - name: volume_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Commit completed.
+components:
+  schemas:
+    VolumeCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+          enum:
+          - v1
+          - v2
+          default: v2
+    Volume:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+          enum:
+          - v1
+          - v2
+        created_at:
+          type: string
+          format: date-time
+        size_bytes:
+          type: integer
+        inode_count:
+          type: integer
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

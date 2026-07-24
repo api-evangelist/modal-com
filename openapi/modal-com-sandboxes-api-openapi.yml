@@ -1,29 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Modal Sandboxes API
-  description: |
-    Modal Sandboxes — secure containers for executing untrusted user or
-    agent code. Sandboxes expose long-running, isolated environments that
-    can execute commands, mount volumes, expose tunnels, and snapshot
-    their filesystem state. Sandboxes are the workhorse primitive
-    underneath LLM-driven coding agents and rollout systems.
+  title: Modal Dicts and Queues Apps Sandboxes API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
   version: 0.1.0
   contact:
     name: Modal Labs
     url: https://modal.com
-  license:
-    name: Modal Terms of Service
-    url: https://modal.com/legal/terms
 servers:
 - url: https://api.modal.com/v1
-  description: Modal control plane
+security:
+- ModalToken: []
 tags:
 - name: Sandboxes
   description: Sandbox lifecycle and management.
-- name: Execution
-  description: Process execution inside sandboxes.
-- name: Filesystem
-  description: Sandbox filesystem operations.
 paths:
   /sandboxes:
     get:
@@ -57,11 +54,15 @@ paths:
       tags:
       - Sandboxes
       summary: Create Sandbox
-      description: |
-        Create a new Sandbox with the given image, resources, and
+      description: 'Create a new Sandbox with the given image, resources, and
+
         optional entrypoint command. Sandboxes start in `Created` state
+
         and transition through `Scheduled`, `Started`, `Ready`, and
+
         terminal states.
+
+        '
       operationId: createSandbox
       requestBody:
         required: true
@@ -111,34 +112,6 @@ paths:
       responses:
         '204':
           description: Sandbox terminated.
-  /sandboxes/{sandbox_id}/exec:
-    post:
-      tags:
-      - Execution
-      summary: Execute Sandbox Command
-      description: |
-        Execute a command inside the Sandbox. Returns a process handle
-        with streamed stdout/stderr and an eventual exit code.
-      operationId: execSandbox
-      parameters:
-      - name: sandbox_id
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ExecRequest'
-      responses:
-        '200':
-          description: Process started.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerProcess'
   /sandboxes/{sandbox_id}/snapshot:
     post:
       tags:
@@ -184,59 +157,6 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/Tunnel'
-  /sandboxes/{sandbox_id}/files:
-    get:
-      tags:
-      - Filesystem
-      summary: Read Sandbox File
-      description: Read a file inside the Sandbox at the given path.
-      operationId: readSandboxFile
-      parameters:
-      - name: sandbox_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: path
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: File contents.
-          content:
-            application/octet-stream:
-              schema:
-                type: string
-                format: binary
-    put:
-      tags:
-      - Filesystem
-      summary: Write Sandbox File
-      description: Write a file inside the Sandbox at the given path.
-      operationId: writeSandboxFile
-      parameters:
-      - name: sandbox_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: path
-        in: query
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-      responses:
-        '204':
-          description: File written.
 components:
   schemas:
     Sandbox:
@@ -248,7 +168,13 @@ components:
           type: string
         state:
           type: string
-          enum: [created, scheduled, started, ready, finished, terminated]
+          enum:
+          - created
+          - scheduled
+          - started
+          - ready
+          - finished
+          - terminated
         image:
           type: string
         gpu:
@@ -301,33 +227,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    ExecRequest:
-      type: object
-      required: [command]
-      properties:
-        command:
-          type: array
-          items:
-            type: string
-        workdir:
-          type: string
-        stdin:
-          type: string
-          format: byte
-        env:
-          type: object
-          additionalProperties:
-            type: string
-    ContainerProcess:
-      type: object
-      properties:
-        process_id:
-          type: string
-        sandbox_id:
-          type: string
-        returncode:
-          type: integer
-          nullable: true
     Tunnel:
       type: object
       properties:
@@ -342,5 +241,3 @@ components:
     ModalToken:
       type: http
       scheme: bearer
-security:
-- ModalToken: []

@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Environments API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Environments
+  description: Modal workspace environments.
+paths:
+  /environments:
+    get:
+      tags:
+      - Environments
+      summary: List Environments
+      operationId: listEnvironments
+      responses:
+        '200':
+          description: A page of environments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Environment'
+    post:
+      tags:
+      - Environments
+      summary: Create Environment
+      operationId: createEnvironment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                webhook_suffix:
+                  type: string
+      responses:
+        '201':
+          description: Environment created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+components:
+  schemas:
+    Environment:
+      type: object
+      properties:
+        name:
+          type: string
+        workspace_id:
+          type: string
+        webhook_suffix:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Filesystem API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Filesystem
+  description: Sandbox filesystem operations.
+paths:
+  /sandboxes/{sandbox_id}/files:
+    get:
+      tags:
+      - Filesystem
+      summary: Read Sandbox File
+      description: Read a file inside the Sandbox at the given path.
+      operationId: readSandboxFile
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File contents.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    put:
+      tags:
+      - Filesystem
+      summary: Write Sandbox File
+      description: Write a file inside the Sandbox at the given path.
+      operationId: writeSandboxFile
+      parameters:
+      - name: sandbox_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '204':
+          description: File written.
+components:
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

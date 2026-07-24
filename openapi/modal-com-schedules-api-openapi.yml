@@ -1,18 +1,23 @@
 openapi: 3.1.0
 info:
-  title: Modal Schedules API
-  description: |
-    Modal Schedules — periodic execution for Modal Functions. Modal
-    supports two scheduling primitives: `modal.Cron` (cron expressions
-    with timezone support) and `modal.Period` (fixed intervals between
-    runs). Schedules are attached to deployed Functions via
-    `@app.function(schedule=...)`.
+  title: Modal Dicts and Queues Apps Schedules API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
   version: 0.1.0
   contact:
     name: Modal Labs
     url: https://modal.com
 servers:
 - url: https://api.modal.com/v1
+security:
+- ModalToken: []
 tags:
 - name: Schedules
   description: Scheduled function executions.
@@ -99,25 +104,6 @@ paths:
                 $ref: '#/components/schemas/ScheduleRun'
 components:
   schemas:
-    Schedule:
-      type: object
-      properties:
-        schedule_id:
-          type: string
-        function_id:
-          type: string
-        kind:
-          type: string
-          enum: [cron, period]
-        cron_expression:
-          type: string
-        timezone:
-          type: string
-        period_seconds:
-          type: integer
-        next_run_at:
-          type: string
-          format: date-time
     ScheduleRun:
       type: object
       properties:
@@ -127,16 +113,39 @@ components:
           type: string
         status:
           type: string
-          enum: [queued, running, success, failure]
+          enum:
+          - queued
+          - running
+          - success
+          - failure
         started_at:
           type: string
           format: date-time
         finished_at:
           type: string
           format: date-time
+    Schedule:
+      type: object
+      properties:
+        schedule_id:
+          type: string
+        function_id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - cron
+          - period
+        cron_expression:
+          type: string
+        timezone:
+          type: string
+        period_seconds:
+          type: integer
+        next_run_at:
+          type: string
+          format: date-time
   securitySchemes:
     ModalToken:
       type: http
       scheme: bearer
-security:
-- ModalToken: []

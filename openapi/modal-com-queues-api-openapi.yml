@@ -1,0 +1,136 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Apps Queues API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Queues
+  description: Distributed FIFO queues.
+paths:
+  /queues:
+    get:
+      tags:
+      - Queues
+      summary: List Queues
+      operationId: listQueues
+      responses:
+        '200':
+          description: A list of queues.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Queue'
+    post:
+      tags:
+      - Queues
+      summary: Create Queue
+      operationId: createQueue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Queue created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+  /queues/{queue_name}/messages:
+    post:
+      tags:
+      - Queues
+      summary: Put Queue Message
+      operationId: putQueueMessage
+      parameters:
+      - name: queue_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                partition:
+                  type: string
+                value: {}
+      responses:
+        '204':
+          description: Message enqueued.
+    delete:
+      tags:
+      - Queues
+      summary: Get Queue Message
+      description: Get and remove the next message from the queue.
+      operationId: getQueueMessage
+      parameters:
+      - name: queue_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partition
+        in: query
+        schema:
+          type: string
+      - name: block
+        in: query
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: The next message.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value: {}
+components:
+  schemas:
+    Queue:
+      type: object
+      properties:
+        queue_id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

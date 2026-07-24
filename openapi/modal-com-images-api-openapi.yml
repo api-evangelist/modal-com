@@ -1,16 +1,23 @@
 openapi: 3.1.0
 info:
-  title: Modal Images API
-  description: |
-    Modal Images — declarative container image specifications used by
-    Functions and Sandboxes. Images are layered, cached on Modal's
-    backend, and built lazily the first time they are referenced.
+  title: Modal Dicts and Queues Apps Images API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
   version: 0.1.0
   contact:
     name: Modal Labs
     url: https://modal.com
 servers:
 - url: https://api.modal.com/v1
+security:
+- ModalToken: []
 tags:
 - name: Images
   description: Container image specifications and builds.
@@ -37,11 +44,15 @@ paths:
       tags:
       - Images
       summary: Build Image
-      description: |
-        Build a new image from a layered specification. Images can be
+      description: 'Build a new image from a layered specification. Images can be
+
         constructed from base images (debian_slim, micromamba, from_dockerfile,
+
         from_registry), with `pip_install`, `apt_install`, `run_commands`,
+
         `env`, `copy_local_file`, and `copy_local_dir` layers.
+
+        '
       operationId: buildImage
       requestBody:
         required: true
@@ -77,25 +88,6 @@ paths:
                 $ref: '#/components/schemas/Image'
 components:
   schemas:
-    Image:
-      type: object
-      properties:
-        image_id:
-          type: string
-        state:
-          type: string
-          enum: [building, ready, failed]
-        base:
-          type: string
-        python_version:
-          type: string
-        digest:
-          type: string
-        size_bytes:
-          type: integer
-        created_at:
-          type: string
-          format: date-time
     ImageBuild:
       type: object
       properties:
@@ -111,13 +103,41 @@ components:
             properties:
               kind:
                 type: string
-                enum: [pip_install, apt_install, run_commands, env, copy_local_file, copy_local_dir, workdir, entrypoint]
+                enum:
+                - pip_install
+                - apt_install
+                - run_commands
+                - env
+                - copy_local_file
+                - copy_local_dir
+                - workdir
+                - entrypoint
               args:
                 type: array
                 items: {}
+    Image:
+      type: object
+      properties:
+        image_id:
+          type: string
+        state:
+          type: string
+          enum:
+          - building
+          - ready
+          - failed
+        base:
+          type: string
+        python_version:
+          type: string
+        digest:
+          type: string
+        size_bytes:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
   securitySchemes:
     ModalToken:
       type: http
       scheme: bearer
-security:
-- ModalToken: []

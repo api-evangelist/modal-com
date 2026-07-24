@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps Functions API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Functions
+  description: Modal Function definitions, invocations, and scaling.
+paths:
+  /apps/{app_id}/functions:
+    get:
+      tags:
+      - Functions
+      summary: List Functions
+      description: List all Functions registered in the given app.
+      operationId: listFunctions
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of functions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Function'
+  /functions/{function_id}:
+    get:
+      tags:
+      - Functions
+      summary: Get Function
+      description: Retrieve a Modal Function by ID.
+      operationId: getFunction
+      parameters:
+      - name: function_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Function.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Function'
+components:
+  schemas:
+    Function:
+      type: object
+      properties:
+        function_id:
+          type: string
+        app_id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        gpu:
+          type: string
+          description: GPU type spec (e.g. T4, L4, A10, A100-40GB, A100-80GB, L40S, H100, H200, B200, RTX-PRO-6000).
+        cpu:
+          type: number
+        memory:
+          type: integer
+          description: Memory in MiB.
+        timeout:
+          type: integer
+        retries:
+          type: integer
+        min_containers:
+          type: integer
+        max_containers:
+          type: integer
+        web_url:
+          type: string
+          format: uri
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

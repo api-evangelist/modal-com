@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues Apps API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+security:
+- ModalToken: []
+tags:
+- name: Apps
+  description: Modal App lifecycle.
+paths:
+  /apps:
+    get:
+      tags:
+      - Apps
+      summary: List Apps
+      description: List all Modal apps in the current workspace and environment.
+      operationId: listApps
+      parameters:
+      - name: environment
+        in: query
+        schema:
+          type: string
+      - name: state
+        in: query
+        schema:
+          type: string
+          enum:
+          - ephemeral
+          - deployed
+          - stopped
+      responses:
+        '200':
+          description: A page of apps.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/App'
+    post:
+      tags:
+      - Apps
+      summary: Create App
+      description: Create a new ephemeral or deployed Modal app.
+      operationId: createApp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppCreate'
+      responses:
+        '201':
+          description: App created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /apps/{app_id}:
+    get:
+      tags:
+      - Apps
+      summary: Get App
+      description: Retrieve a single Modal app by ID.
+      operationId: getApp
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The app.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    delete:
+      tags:
+      - Apps
+      summary: Stop App
+      description: Stop a running Modal app and tear down its containers.
+      operationId: stopApp
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: App stopped.
+components:
+  schemas:
+    AppCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        environment:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+    App:
+      type: object
+      properties:
+        app_id:
+          type: string
+        name:
+          type: string
+        state:
+          type: string
+          enum:
+          - ephemeral
+          - deployed
+          - stopped
+        environment:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer

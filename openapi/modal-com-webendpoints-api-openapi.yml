@@ -1,18 +1,23 @@
 openapi: 3.1.0
 info:
-  title: Modal Web Endpoints API
-  description: |
-    Modal Web Endpoints — HTTP, ASGI, and WSGI surfaces exposed by Modal
-    Functions. Web Endpoints are produced by decorating a Modal Function
-    with `@modal.fastapi_endpoint`, `@modal.asgi_app`, `@modal.wsgi_app`,
-    or `@modal.web_server` and are served from a Modal-issued URL.
-    Streaming responses, WebSockets, and proxy-auth tokens are supported.
+  title: Modal Dicts and Queues Apps WebEndpoints API
+  description: 'Modal Dicts and Queues — distributed in-memory primitives for
+
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+
+    message queues used to coordinate work across Modal functions and
+
+    sandboxes.
+
+    '
   version: 0.1.0
   contact:
     name: Modal Labs
     url: https://modal.com
 servers:
 - url: https://api.modal.com/v1
+security:
+- ModalToken: []
 tags:
 - name: WebEndpoints
   description: HTTP/ASGI/WSGI web endpoints backed by Modal Functions.
@@ -89,7 +94,11 @@ components:
           type: string
         kind:
           type: string
-          enum: [fastapi_endpoint, asgi_app, wsgi_app, web_server]
+          enum:
+          - fastapi_endpoint
+          - asgi_app
+          - wsgi_app
+          - web_server
         url:
           type: string
           format: uri
@@ -97,7 +106,11 @@ components:
           type: string
         auth:
           type: string
-          enum: [none, proxy_token, bearer, custom]
+          enum:
+          - none
+          - proxy_token
+          - bearer
+          - custom
         methods:
           type: array
           items:
@@ -109,5 +122,3 @@ components:
     ModalToken:
       type: http
       scheme: bearer
-security:
-- ModalToken: []
