@@ -1,192 +1,1009 @@
 aid: modal
 url: https://raw.githubusercontent.com/api-evangelist/modal-com/refs/heads/main/apis.yml
 apis:
-  - aid: modal:modal-functions-api
-    name: Modal Functions API
-    tags:
-      - Serverless
-      - GPU
-      - Functions
-      - Python
-    humanURL: https://modal.com/docs/guide/apps
-    properties:
-      - url: https://modal.com/docs/guide/apps
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Function
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.App
-        type: Documentation
-      - url: openapi/modal-functions-openapi.yml
-        type: OpenAPI
-      - url: json-schema/modal-function-schema.json
-        type: JSONSchema
-      - url: json-ld/modal-com-context.jsonld
-        type: JSONLD
-    description: >-
-      Modal Functions are the core serverless primitive — Python functions backed by autoscaling container pools. They
-      support optional GPU attachment (T4 through B200), Modal-built container images, Volumes, Secrets, retries,
-      timeouts, scheduling, web endpoints, dynamic batching, and class-based stateful workers. Invoke synchronously
-      (`.remote()`), asynchronously (`.spawn()`), or as a map (`.map()`).
-  - aid: modal:modal-sandboxes-api
-    name: Modal Sandboxes API
-    tags:
-      - Sandboxes
-      - Agents
-      - Code Execution
-      - Isolation
-    humanURL: https://modal.com/docs/guide/sandboxes
-    properties:
-      - url: https://modal.com/docs/guide/sandboxes
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Sandbox
-        type: Documentation
-      - url: openapi/modal-sandboxes-openapi.yml
-        type: OpenAPI
-      - url: json-schema/modal-sandbox-schema.json
-        type: JSONSchema
-    description: >-
-      Modal Sandboxes are secure containers for executing untrusted user or agent code. Spawned at runtime with
-      `Sandbox.create()`, they support arbitrary command execution, filesystem snapshots, port tunnels, volume mounts,
-      GPU attachment, idle timeouts (up to 24h), readiness probes, named lookup, and tagging. Sandboxes are the
-      workhorse primitive for LLM coding agents and rollout systems on Modal.
-  - aid: modal:modal-volumes-api
-    name: Modal Volumes API
-    tags:
-      - Storage
-      - Distributed File System
-      - Persistence
-    humanURL: https://modal.com/docs/guide/volumes
-    properties:
-      - url: https://modal.com/docs/guide/volumes
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Volume
-        type: Documentation
-      - url: openapi/modal-volumes-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Volumes provide a high-performance distributed file system optimized for ML workflows. Volumes attach to
-      Functions and Sandboxes via `Volume.from_name()`, support concurrent reads, explicit `commit()` and `reload()`
-      semantics, sub-path mounting, and read-only mounts. Volumes v2 (beta) removes inode limits and supports hundreds
-      of concurrent writers to distinct files.
-  - aid: modal:modal-images-api
-    name: Modal Images API
-    tags:
-      - Container Images
-      - Build
-      - Python
-    humanURL: https://modal.com/docs/guide/images
-    properties:
-      - url: https://modal.com/docs/guide/images
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Image
-        type: Documentation
-      - url: openapi/modal-images-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Images are declarative, layered container image specifications built lazily on Modal's backend. Build from
-      `debian_slim`, `micromamba`, `from_registry`, or `from_dockerfile`; layer `pip_install`, `apt_install`,
-      `run_commands`, `env`, `copy_local_file`, and `copy_local_dir`. Modal caches layers globally so cold starts of
-      identical images are sub-second.
-  - aid: modal:modal-secrets-api
-    name: Modal Secrets API
-    tags:
-      - Secrets
-      - Configuration
-      - Environment Variables
-    humanURL: https://modal.com/docs/guide/secrets
-    properties:
-      - url: https://modal.com/docs/guide/secrets
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Secret
-        type: Documentation
-      - url: openapi/modal-secrets-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Secrets are encrypted, named bundles of environment variables injected into Functions and Sandboxes at
-      runtime. Manage via dashboard, the `modal secret` CLI, or programmatically with `Secret.from_name()` /
-      `Secret.from_dict()`.
-  - aid: modal:modal-dicts-queues-api
-    name: Modal Dicts and Queues API
-    tags:
-      - Dicts
-      - Queues
-      - State
-      - Coordination
-    humanURL: https://modal.com/docs/guide/dicts
-    properties:
-      - url: https://modal.com/docs/guide/dicts
-        type: Documentation
-      - url: https://modal.com/docs/guide/queues
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Dict
-        type: Documentation
-      - url: https://modal.com/docs/reference/modal.Queue
-        type: Documentation
-      - url: openapi/modal-dicts-queues-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Dicts and Queues are distributed in-memory primitives. `modal.Dict` is a named key-value store;
-      `modal.Queue` is a FIFO queue with optional partitioning and blocking gets. Both are addressable by name across
-      Functions and Sandboxes for cross-container coordination.
-  - aid: modal:modal-schedules-api
-    name: Modal Schedules API
-    tags:
-      - Cron
-      - Scheduling
-      - Recurring Jobs
-    humanURL: https://modal.com/docs/guide/cron
-    properties:
-      - url: https://modal.com/docs/guide/cron
-        type: Documentation
-      - url: openapi/modal-schedules-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Schedules attach periodic execution to a Function via `@app.function(schedule=modal.Cron(...))` or
-      `modal.Period(...)`. Cron supports full cron syntax with timezone; Period specifies a fixed interval. Past runs
-      appear in the dashboard with manual "run now" support.
-  - aid: modal:modal-web-endpoints-api
-    name: Modal Web Endpoints API
-    tags:
-      - Web
-      - HTTP
-      - ASGI
-      - WSGI
-      - FastAPI
-    humanURL: https://modal.com/docs/guide/webhooks
-    properties:
-      - url: https://modal.com/docs/guide/webhooks
-        type: Documentation
-      - url: https://modal.com/docs/guide/webhook-urls
-        type: Documentation
-      - url: https://modal.com/docs/guide/webhook-proxy-auth
-        type: Documentation
-      - url: openapi/modal-web-endpoints-openapi.yml
-        type: OpenAPI
-    description: >-
-      Modal Web Endpoints expose Functions over HTTP via `@modal.fastapi_endpoint`, `@modal.asgi_app`
-      (FastAPI/Starlette/FastHTML), `@modal.wsgi_app` (Flask/Django), or `@modal.web_server` (any port-binding server).
-      Supports streaming, WebSockets, proxy-auth tokens, custom URL labels, and live development via `modal serve`.
-  - aid: modal:modal-tokens-api
-    name: Modal Tokens and Administration API
-    tags:
-      - Administration
-      - Tokens
-      - Workspaces
-      - Environments
-    humanURL: https://modal.com/docs/reference/cli/token
-    properties:
-      - url: https://modal.com/docs/reference/cli/token
-        type: Documentation
-      - url: https://modal.com/docs/reference/cli/profile
-        type: Documentation
-      - url: https://modal.com/docs/guide/environments
-        type: Documentation
-      - url: openapi/modal-tokens-openapi.yml
-        type: OpenAPI
-    description: >-
-      Administrative surface for Modal — token id/secret pair creation and revocation, environment management (e.g.
-      `dev`/`staging`/`prod`), and workspace metadata. Tokens authenticate the `modal` CLI and the Python/TypeScript/Go
-      SDKs against the control plane at `api.modal.com`.
+- aid: modal-com:modal-com-apps-api
+  name: Modal Apps API
+  description: Modal App lifecycle.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-apps-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-dicts-api
+  name: Modal Dicts API
+  description: Distributed key-value stores.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Dicts
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-dicts-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-environments-api
+  name: Modal Environments API
+  description: Modal workspace environments.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Environments
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-environments-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-execution-api
+  name: Modal Execution API
+  description: Process execution inside sandboxes.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Execution
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-execution-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-files-api
+  name: Modal Files API
+  description: Volume file operations.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-files-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-filesystem-api
+  name: Modal Filesystem API
+  description: Sandbox filesystem operations.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Filesystem
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-filesystem-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-functions-api
+  name: Modal Functions API
+  description: Modal Function definitions, invocations, and scaling.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Functions
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-functions-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-images-api
+  name: Modal Images API
+  description: Container image specifications and builds.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-images-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-invocations-api
+  name: Modal Invocations API
+  description: Asynchronous function invocations and result retrieval.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Invocations
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-invocations-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-queues-api
+  name: Modal Queues API
+  description: Distributed FIFO queues.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Queues
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-queues-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-sandboxes-api
+  name: Modal Sandboxes API
+  description: Sandbox lifecycle and management.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Sandboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-sandboxes-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-schedules-api
+  name: Modal Schedules API
+  description: Scheduled function executions.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-secrets-api
+  name: Modal Secrets API
+  description: Encrypted environment-variable secrets.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-tokens-api
+  name: Modal Tokens API
+  description: Modal API tokens.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-volumes-api
+  name: Modal Volumes API
+  description: Volume lifecycle.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-webendpoints-api
+  name: Modal WebEndpoints API
+  description: HTTP/ASGI/WSGI web endpoints backed by Modal Functions.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - WebEndpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-webendpoints-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
+- aid: modal-com:modal-com-workspaces-api
+  name: Modal Workspaces API
+  description: Modal workspaces.
+  humanURL: https://modal.com/docs/guide/apps
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/modal-com-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://modal.com/docs/guide/apps
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Function
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.App
+  - type: JSONSchema
+    url: json-schema/modal-function-schema.json
+  - type: JSONLD
+    url: json-ld/modal-com-context.jsonld
+  - type: Documentation
+    url: https://modal.com/docs/guide/sandboxes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Sandbox
+  - type: JSONSchema
+    url: json-schema/modal-sandbox-schema.json
+  - type: Documentation
+    url: https://modal.com/docs/guide/volumes
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Volume
+  - type: Documentation
+    url: https://modal.com/docs/guide/images
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Image
+  - type: Documentation
+    url: https://modal.com/docs/guide/secrets
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Secret
+  - type: Documentation
+    url: https://modal.com/docs/guide/dicts
+  - type: Documentation
+    url: https://modal.com/docs/guide/queues
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Dict
+  - type: Documentation
+    url: https://modal.com/docs/reference/modal.Queue
+  - type: Documentation
+    url: https://modal.com/docs/guide/cron
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhooks
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-urls
+  - type: Documentation
+    url: https://modal.com/docs/guide/webhook-proxy-auth
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/token
+  - type: Documentation
+    url: https://modal.com/docs/reference/cli/profile
+  - type: Documentation
+    url: https://modal.com/docs/guide/environments
 name: Modal
 tags:
   - Serverless
@@ -201,7 +1018,20 @@ tags:
   - TypeScript
   - Go
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/modal-com.png
 access: 3rd-Party
 common:
   - type: AgenticAccess
