@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: Modal Images API
+  description: |
+    Modal Images — declarative container image specifications used by
+    Functions and Sandboxes. Images are layered, cached on Modal's
+    backend, and built lazily the first time they are referenced.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+tags:
+- name: Images
+  description: Container image specifications and builds.
+paths:
+  /images:
+    get:
+      tags:
+      - Images
+      summary: List Images
+      operationId: listImages
+      responses:
+        '200':
+          description: A page of images.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
+    post:
+      tags:
+      - Images
+      summary: Build Image
+      description: |
+        Build a new image from a layered specification. Images can be
+        constructed from base images (debian_slim, micromamba, from_dockerfile,
+        from_registry), with `pip_install`, `apt_install`, `run_commands`,
+        `env`, `copy_local_file`, and `copy_local_dir` layers.
+      operationId: buildImage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageBuild'
+      responses:
+        '201':
+          description: Image build started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+  /images/{image_id}:
+    get:
+      tags:
+      - Images
+      summary: Get Image
+      operationId: getImage
+      parameters:
+      - name: image_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The image.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        image_id:
+          type: string
+        state:
+          type: string
+          enum: [building, ready, failed]
+        base:
+          type: string
+        python_version:
+          type: string
+        digest:
+          type: string
+        size_bytes:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    ImageBuild:
+      type: object
+      properties:
+        base:
+          type: string
+          description: Base image identifier (e.g. debian_slim, micromamba, from_registry).
+        python_version:
+          type: string
+        layers:
+          type: array
+          items:
+            type: object
+            properties:
+              kind:
+                type: string
+                enum: [pip_install, apt_install, run_commands, env, copy_local_file, copy_local_dir, workdir, entrypoint]
+              args:
+                type: array
+                items: {}
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []

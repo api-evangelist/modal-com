@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Modal Schedules API
+  description: |
+    Modal Schedules — periodic execution for Modal Functions. Modal
+    supports two scheduling primitives: `modal.Cron` (cron expressions
+    with timezone support) and `modal.Period` (fixed intervals between
+    runs). Schedules are attached to deployed Functions via
+    `@app.function(schedule=...)`.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+tags:
+- name: Schedules
+  description: Scheduled function executions.
+paths:
+  /schedules:
+    get:
+      tags:
+      - Schedules
+      summary: List Schedules
+      operationId: listSchedules
+      responses:
+        '200':
+          description: A page of schedules.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Schedule'
+  /schedules/{schedule_id}:
+    get:
+      tags:
+      - Schedules
+      summary: Get Schedule
+      operationId: getSchedule
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The schedule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+  /schedules/{schedule_id}/runs:
+    get:
+      tags:
+      - Schedules
+      summary: List Schedule Runs
+      operationId: listScheduleRuns
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of runs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScheduleRun'
+    post:
+      tags:
+      - Schedules
+      summary: Trigger Schedule Run
+      description: Manually trigger an immediate run of the scheduled Function.
+      operationId: triggerSchedule
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Run accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleRun'
+components:
+  schemas:
+    Schedule:
+      type: object
+      properties:
+        schedule_id:
+          type: string
+        function_id:
+          type: string
+        kind:
+          type: string
+          enum: [cron, period]
+        cron_expression:
+          type: string
+        timezone:
+          type: string
+        period_seconds:
+          type: integer
+        next_run_at:
+          type: string
+          format: date-time
+    ScheduleRun:
+      type: object
+      properties:
+        run_id:
+          type: string
+        schedule_id:
+          type: string
+        status:
+          type: string
+          enum: [queued, running, success, failure]
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []

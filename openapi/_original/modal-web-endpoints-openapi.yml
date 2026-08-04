@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: Modal Web Endpoints API
+  description: |
+    Modal Web Endpoints — HTTP, ASGI, and WSGI surfaces exposed by Modal
+    Functions. Web Endpoints are produced by decorating a Modal Function
+    with `@modal.fastapi_endpoint`, `@modal.asgi_app`, `@modal.wsgi_app`,
+    or `@modal.web_server` and are served from a Modal-issued URL.
+    Streaming responses, WebSockets, and proxy-auth tokens are supported.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+tags:
+- name: WebEndpoints
+  description: HTTP/ASGI/WSGI web endpoints backed by Modal Functions.
+paths:
+  /web-endpoints:
+    get:
+      tags:
+      - WebEndpoints
+      summary: List Web Endpoints
+      operationId: listWebEndpoints
+      responses:
+        '200':
+          description: A page of web endpoints.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebEndpoint'
+  /web-endpoints/{endpoint_id}:
+    get:
+      tags:
+      - WebEndpoints
+      summary: Get Web Endpoint
+      operationId: getWebEndpoint
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The web endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebEndpoint'
+  /web-endpoints/{endpoint_id}/labels:
+    put:
+      tags:
+      - WebEndpoints
+      summary: Set Web Endpoint Custom URL Label
+      operationId: setWebEndpointLabel
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+      responses:
+        '204':
+          description: Label set.
+components:
+  schemas:
+    WebEndpoint:
+      type: object
+      properties:
+        endpoint_id:
+          type: string
+        function_id:
+          type: string
+        kind:
+          type: string
+          enum: [fastapi_endpoint, asgi_app, wsgi_app, web_server]
+        url:
+          type: string
+          format: uri
+        custom_label:
+          type: string
+        auth:
+          type: string
+          enum: [none, proxy_token, bearer, custom]
+        methods:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []

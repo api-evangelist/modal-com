@@ -1,0 +1,189 @@
+openapi: 3.1.0
+info:
+  title: Modal Tokens and Workspace API
+  description: |
+    Modal token, workspace, and environment management — the
+    administrative surface used by the `modal token`, `modal profile`,
+    and `modal config` CLI commands. Tokens are id/secret pairs scoped
+    to a workspace.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+tags:
+- name: Tokens
+  description: Modal API tokens.
+- name: Environments
+  description: Modal workspace environments.
+- name: Workspaces
+  description: Modal workspaces.
+paths:
+  /tokens:
+    get:
+      tags:
+      - Tokens
+      summary: List Tokens
+      operationId: listTokens
+      responses:
+        '200':
+          description: A page of tokens.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Token'
+    post:
+      tags:
+      - Tokens
+      summary: Create Token
+      description: |
+        Create a new Modal token id and secret. The plaintext secret is
+        returned exactly once.
+      operationId: createToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Token created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenWithSecret'
+  /tokens/{token_id}:
+    delete:
+      tags:
+      - Tokens
+      summary: Revoke Token
+      operationId: revokeToken
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Token revoked.
+  /environments:
+    get:
+      tags:
+      - Environments
+      summary: List Environments
+      operationId: listEnvironments
+      responses:
+        '200':
+          description: A page of environments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Environment'
+    post:
+      tags:
+      - Environments
+      summary: Create Environment
+      operationId: createEnvironment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                webhook_suffix:
+                  type: string
+      responses:
+        '201':
+          description: Environment created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+  /workspaces/current:
+    get:
+      tags:
+      - Workspaces
+      summary: Get Current Workspace
+      operationId: getCurrentWorkspace
+      responses:
+        '200':
+          description: The current workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+components:
+  schemas:
+    Token:
+      type: object
+      properties:
+        token_id:
+          type: string
+        name:
+          type: string
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        last_used_at:
+          type: string
+          format: date-time
+    TokenWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/Token'
+      - type: object
+        properties:
+          token_secret:
+            type: string
+    Environment:
+      type: object
+      properties:
+        name:
+          type: string
+        workspace_id:
+          type: string
+        webhook_suffix:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Workspace:
+      type: object
+      properties:
+        workspace_id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+          enum: [starter, team, enterprise]
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []

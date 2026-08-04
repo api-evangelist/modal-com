@@ -1,0 +1,370 @@
+openapi: 3.1.0
+info:
+  title: Modal Functions API
+  description: |
+    Conceptual REST surface for Modal Functions — Modal's core primitive
+    for serverless container-backed Python functions with autoscaling
+    container pools, GPU attachment, web endpoints, and remote invocation.
+
+    This specification mirrors the operations exposed by the Modal Python
+    SDK (`modal.App`, `modal.Function`) and the `modal` CLI. The Modal
+    control plane is gRPC over HTTP/2; this OpenAPI document describes
+    the equivalent resource-oriented surface to aid governance, capability
+    composition, and toolchain integration.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+  license:
+    name: Modal Terms of Service
+    url: https://modal.com/legal/terms
+servers:
+- url: https://api.modal.com/v1
+  description: Modal control plane
+tags:
+- name: Apps
+  description: Modal App lifecycle.
+- name: Functions
+  description: Modal Function definitions, invocations, and scaling.
+- name: Invocations
+  description: Asynchronous function invocations and result retrieval.
+paths:
+  /apps:
+    get:
+      tags:
+      - Apps
+      summary: List Apps
+      description: List all Modal apps in the current workspace and environment.
+      operationId: listApps
+      parameters:
+      - name: environment
+        in: query
+        schema:
+          type: string
+      - name: state
+        in: query
+        schema:
+          type: string
+          enum: [ephemeral, deployed, stopped]
+      responses:
+        '200':
+          description: A page of apps.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/App'
+    post:
+      tags:
+      - Apps
+      summary: Create App
+      description: Create a new ephemeral or deployed Modal app.
+      operationId: createApp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppCreate'
+      responses:
+        '201':
+          description: App created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /apps/{app_id}:
+    get:
+      tags:
+      - Apps
+      summary: Get App
+      description: Retrieve a single Modal app by ID.
+      operationId: getApp
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The app.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    delete:
+      tags:
+      - Apps
+      summary: Stop App
+      description: Stop a running Modal app and tear down its containers.
+      operationId: stopApp
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: App stopped.
+  /apps/{app_id}/functions:
+    get:
+      tags:
+      - Functions
+      summary: List Functions
+      description: List all Functions registered in the given app.
+      operationId: listFunctions
+      parameters:
+      - name: app_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of functions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Function'
+  /functions/{function_id}:
+    get:
+      tags:
+      - Functions
+      summary: Get Function
+      description: Retrieve a Modal Function by ID.
+      operationId: getFunction
+      parameters:
+      - name: function_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Function.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Function'
+  /functions/{function_id}/invocations:
+    post:
+      tags:
+      - Invocations
+      summary: Invoke Function
+      description: |
+        Synchronously invoke a Modal Function. The request body is the
+        serialized argument payload; the response contains the
+        serialized return value or an invocation error.
+      operationId: invokeFunction
+      parameters:
+      - name: function_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvocationRequest'
+      responses:
+        '200':
+          description: Invocation completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvocationResult'
+    get:
+      tags:
+      - Invocations
+      summary: List Invocations
+      description: List recent invocations for the given Function.
+      operationId: listInvocations
+      parameters:
+      - name: function_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of invocations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InvocationResult'
+  /functions/{function_id}/spawn:
+    post:
+      tags:
+      - Invocations
+      summary: Spawn Asynchronous Invocation
+      description: |
+        Spawn an asynchronous Function call and return a FunctionCall
+        handle. The result is fetched later via the FunctionCall ID.
+      operationId: spawnFunction
+      parameters:
+      - name: function_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvocationRequest'
+      responses:
+        '202':
+          description: Invocation accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FunctionCall'
+  /function-calls/{call_id}:
+    get:
+      tags:
+      - Invocations
+      summary: Get Function Call
+      description: Retrieve the status and result of an async FunctionCall.
+      operationId: getFunctionCall
+      parameters:
+      - name: call_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The FunctionCall result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FunctionCall'
+components:
+  schemas:
+    App:
+      type: object
+      properties:
+        app_id:
+          type: string
+        name:
+          type: string
+        state:
+          type: string
+          enum: [ephemeral, deployed, stopped]
+        environment:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+    AppCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        environment:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+    Function:
+      type: object
+      properties:
+        function_id:
+          type: string
+        app_id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        gpu:
+          type: string
+          description: GPU type spec (e.g. T4, L4, A10, A100-40GB, A100-80GB, L40S, H100, H200, B200, RTX-PRO-6000).
+        cpu:
+          type: number
+        memory:
+          type: integer
+          description: Memory in MiB.
+        timeout:
+          type: integer
+        retries:
+          type: integer
+        min_containers:
+          type: integer
+        max_containers:
+          type: integer
+        web_url:
+          type: string
+          format: uri
+    InvocationRequest:
+      type: object
+      properties:
+        args:
+          type: array
+          items: {}
+        kwargs:
+          type: object
+          additionalProperties: true
+    InvocationResult:
+      type: object
+      properties:
+        call_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, success, failure, terminated]
+        result:
+          nullable: true
+        error:
+          type: object
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+    FunctionCall:
+      type: object
+      properties:
+        call_id:
+          type: string
+        function_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, success, failure, terminated]
+        result:
+          nullable: true
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+      description: Modal token id and token secret pair (`MODAL_TOKEN_ID` + `MODAL_TOKEN_SECRET`).
+security:
+- ModalToken: []

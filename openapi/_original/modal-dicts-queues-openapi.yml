@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  title: Modal Dicts and Queues API
+  description: |
+    Modal Dicts and Queues — distributed in-memory primitives for
+    cross-container state. Dicts are key-value stores; Queues are FIFO
+    message queues used to coordinate work across Modal functions and
+    sandboxes.
+  version: 0.1.0
+  contact:
+    name: Modal Labs
+    url: https://modal.com
+servers:
+- url: https://api.modal.com/v1
+tags:
+- name: Dicts
+  description: Distributed key-value stores.
+- name: Queues
+  description: Distributed FIFO queues.
+paths:
+  /dicts:
+    get:
+      tags:
+      - Dicts
+      summary: List Dicts
+      operationId: listDicts
+      responses:
+        '200':
+          description: A list of dicts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Dict'
+    post:
+      tags:
+      - Dicts
+      summary: Create Dict
+      operationId: createDict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Dict created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dict'
+  /dicts/{dict_name}/entries/{key}:
+    get:
+      tags:
+      - Dicts
+      summary: Get Dict Entry
+      operationId: getDictEntry
+      parameters:
+      - name: dict_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The entry value.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value: {}
+        '404':
+          description: Key not found.
+    put:
+      tags:
+      - Dicts
+      summary: Put Dict Entry
+      operationId: putDictEntry
+      parameters:
+      - name: dict_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value: {}
+      responses:
+        '204':
+          description: Entry stored.
+    delete:
+      tags:
+      - Dicts
+      summary: Delete Dict Entry
+      operationId: deleteDictEntry
+      parameters:
+      - name: dict_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Entry deleted.
+  /queues:
+    get:
+      tags:
+      - Queues
+      summary: List Queues
+      operationId: listQueues
+      responses:
+        '200':
+          description: A list of queues.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Queue'
+    post:
+      tags:
+      - Queues
+      summary: Create Queue
+      operationId: createQueue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Queue created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+  /queues/{queue_name}/messages:
+    post:
+      tags:
+      - Queues
+      summary: Put Queue Message
+      operationId: putQueueMessage
+      parameters:
+      - name: queue_name
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                partition:
+                  type: string
+                value: {}
+      responses:
+        '204':
+          description: Message enqueued.
+    delete:
+      tags:
+      - Queues
+      summary: Get Queue Message
+      description: Get and remove the next message from the queue.
+      operationId: getQueueMessage
+      parameters:
+      - name: queue_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partition
+        in: query
+        schema:
+          type: string
+      - name: block
+        in: query
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: The next message.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value: {}
+components:
+  schemas:
+    Dict:
+      type: object
+      properties:
+        dict_id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Queue:
+      type: object
+      properties:
+        queue_id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    ModalToken:
+      type: http
+      scheme: bearer
+security:
+- ModalToken: []
