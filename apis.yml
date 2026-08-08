@@ -1,4 +1,4 @@
-aid: modal
+aid: modal-com
 url: https://raw.githubusercontent.com/api-evangelist/modal-com/refs/heads/main/apis.yml
 apis:
 - aid: modal-com:modal-com-apps-api
