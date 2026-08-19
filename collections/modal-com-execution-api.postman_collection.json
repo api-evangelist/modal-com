@@ -1,0 +1,160 @@
+{
+  "item": [
+    {
+      "id": "b74d6bdd-b72b-44cf-a8ee-7ba5b1e01b01",
+      "name": "Execution",
+      "description": {
+        "content": "Process execution inside sandboxes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "473a46f1-4c30-4042-b04f-c2709bce3c95",
+          "name": "Execute Sandbox Command",
+          "request": {
+            "name": "Execute Sandbox Command",
+            "description": {
+              "content": "Execute a command inside the Sandbox. Returns a process handle\nwith streamed stdout/stderr and an eventual exit code.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":sandbox_id",
+                "exec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workdir\": \"<string>\",\n  \"stdin\": \"<byte>\",\n  \"env\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27ce9f31-793b-4d8c-8412-c377f4e66807",
+              "name": "Process started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":sandbox_id",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workdir\": \"<string>\",\n  \"stdin\": \"<byte>\",\n  \"env\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"process_id\": \"string\",\n  \"sandbox_id\": \"string\",\n  \"returncode\": 6701\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9a0476bb-3c06-4a34-94a1-937076614909",
+    "name": "Modal Dicts and Queues Apps Execution API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

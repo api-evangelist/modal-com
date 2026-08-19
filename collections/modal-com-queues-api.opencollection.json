@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Apps Queues API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Queues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/queues"
+          },
+          "docs": "List Queues"
+        },
+        {
+          "info": {
+            "name": "Create Queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/queues",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Queue"
+        },
+        {
+          "info": {
+            "name": "Put Queue Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/queues/:queue_name/messages",
+            "params": [
+              {
+                "name": "queue_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Put Queue Message"
+        },
+        {
+          "info": {
+            "name": "Get Queue Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/queues/:queue_name/messages",
+            "params": [
+              {
+                "name": "queue_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "partition",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "block",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get and remove the next message from the queue."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

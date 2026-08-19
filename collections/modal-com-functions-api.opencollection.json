@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues Apps Functions API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Functions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Functions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/apps/:app_id/functions",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all Functions registered in the given app."
+        },
+        {
+          "info": {
+            "name": "Get Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/functions/:function_id",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a Modal Function by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

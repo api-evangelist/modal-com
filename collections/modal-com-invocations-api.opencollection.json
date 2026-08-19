@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues Apps Invocations API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invocations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Invocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/functions/:function_id/invocations",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List recent invocations for the given Function."
+        },
+        {
+          "info": {
+            "name": "Invoke Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/functions/:function_id/invocations",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Synchronously invoke a Modal Function. The request body is the\nserialized argument payload; the response contains the\nserialized return value or an invocation error.\n"
+        },
+        {
+          "info": {
+            "name": "Spawn Asynchronous Invocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/functions/:function_id/spawn",
+            "params": [
+              {
+                "name": "function_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Spawn an asynchronous Function call and return a FunctionCall\nhandle. The result is fetched later via the FunctionCall ID.\n"
+        },
+        {
+          "info": {
+            "name": "Get Function Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/function-calls/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and result of an async FunctionCall."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

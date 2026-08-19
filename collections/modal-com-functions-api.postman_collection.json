@@ -1,0 +1,235 @@
+{
+  "item": [
+    {
+      "id": "3bfd9517-43ba-4ecf-9d34-90fa4fc49403",
+      "name": "Functions",
+      "description": {
+        "content": "Modal Function definitions, invocations, and scaling.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b4153f4b-09d8-4b89-9b89-a856e35ef20a",
+          "name": "List Functions",
+          "request": {
+            "name": "List Functions",
+            "description": {
+              "content": "List all Functions registered in the given app.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":app_id",
+                "functions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "app_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e2db69e-4e72-4f36-9013-1d77bc946753",
+              "name": "A page of functions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":app_id",
+                    "functions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "app_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"function_id\": \"string\",\n      \"app_id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"gpu\": \"string\",\n      \"cpu\": 1847.6492535698997,\n      \"memory\": 710,\n      \"timeout\": 8252,\n      \"retries\": 1916,\n      \"min_containers\": 154,\n      \"max_containers\": 3080,\n      \"web_url\": \"https://ClzvqZr.zqOWuXuR8v.hrSE7jqxgua\"\n    },\n    {\n      \"function_id\": \"string\",\n      \"app_id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"gpu\": \"string\",\n      \"cpu\": 4780.816436757865,\n      \"memory\": 8065,\n      \"timeout\": 170,\n      \"retries\": 526,\n      \"min_containers\": 9846,\n      \"max_containers\": 8591,\n      \"web_url\": \"https://RhXpsUMjaqXkoh.oktClCuEiL1dhIJvK,Ue0Pb0Jj+MszV\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd9f8c5a-6f6d-4e2e-b373-996cd087033c",
+          "name": "Get Function",
+          "request": {
+            "name": "Get Function",
+            "description": {
+              "content": "Retrieve a Modal Function by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "functions",
+                ":function_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "function_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6774d87-2fec-4c99-9fd3-b9d866755194",
+              "name": "The Function.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "functions",
+                    ":function_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "function_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"function_id\": \"string\",\n  \"app_id\": \"string\",\n  \"name\": \"string\",\n  \"image\": \"string\",\n  \"gpu\": \"string\",\n  \"cpu\": 8770.359135793557,\n  \"memory\": 5650,\n  \"timeout\": 2497,\n  \"retries\": 8755,\n  \"min_containers\": 9869,\n  \"max_containers\": 8526,\n  \"web_url\": \"http://zplthguQiTIxFJVngyGFiSPv.bbkfQl3e.J2wLjnSnJVPv7kkSmTa+UD9KHDiZaAhyUzTzoHzDqwSJ37kLRcu3HjtG5fUSN2-9g\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "574b933a-5949-4131-8c58-5c70a01d79c1",
+    "name": "Modal Dicts and Queues Apps Functions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,402 @@
+{
+  "item": [
+    {
+      "id": "dfacbb61-af89-4822-9d86-01a017312631",
+      "name": "Schedules",
+      "description": {
+        "content": "Scheduled function executions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "779bb1a5-fd2c-4beb-830b-56c67e1d9826",
+          "name": "List Schedules",
+          "request": {
+            "name": "List Schedules",
+            "description": {},
+            "url": {
+              "path": [
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "908d1e56-ac91-4234-bcf8-a46f399ea39c",
+              "name": "A page of schedules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"schedule_id\": \"string\",\n      \"function_id\": \"string\",\n      \"kind\": \"cron\",\n      \"cron_expression\": \"string\",\n      \"timezone\": \"string\",\n      \"period_seconds\": 4168,\n      \"next_run_at\": \"1963-04-04T17:53:13.483Z\"\n    },\n    {\n      \"schedule_id\": \"string\",\n      \"function_id\": \"string\",\n      \"kind\": \"cron\",\n      \"cron_expression\": \"string\",\n      \"timezone\": \"string\",\n      \"period_seconds\": 6372,\n      \"next_run_at\": \"1969-12-13T10:19:18.185Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c7f615e-5ea3-43f3-939a-5ca61b336a54",
+          "name": "Get Schedule",
+          "request": {
+            "name": "Get Schedule",
+            "description": {},
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schedule_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0354d5df-0a58-4251-bc60-04725507f209",
+              "name": "The schedule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schedule_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedule_id\": \"string\",\n  \"function_id\": \"string\",\n  \"kind\": \"period\",\n  \"cron_expression\": \"string\",\n  \"timezone\": \"string\",\n  \"period_seconds\": 8464,\n  \"next_run_at\": \"1952-06-15T01:51:25.614Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe9323fe-9ed4-4479-98b5-4b4905c7fd04",
+          "name": "List Schedule Runs",
+          "request": {
+            "name": "List Schedule Runs",
+            "description": {},
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule_id",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schedule_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93cc67b6-5afb-4a0c-bd4d-a0ffcd9a284d",
+              "name": "A page of runs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schedule_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"run_id\": \"string\",\n      \"schedule_id\": \"string\",\n      \"status\": \"failure\",\n      \"started_at\": \"2003-08-02T02:11:18.813Z\",\n      \"finished_at\": \"1968-04-17T05:21:16.763Z\"\n    },\n    {\n      \"run_id\": \"string\",\n      \"schedule_id\": \"string\",\n      \"status\": \"failure\",\n      \"started_at\": \"2018-11-12T08:20:02.143Z\",\n      \"finished_at\": \"1988-10-26T11:03:29.639Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b40c5639-3474-4b24-adbd-abd564de0cef",
+          "name": "Trigger Schedule Run",
+          "request": {
+            "name": "Trigger Schedule Run",
+            "description": {
+              "content": "Manually trigger an immediate run of the scheduled Function.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":schedule_id",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "schedule_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "39ffa187-3b49-444d-aee5-c337dd4d3c60",
+              "name": "Run accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "schedule_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"run_id\": \"string\",\n  \"schedule_id\": \"string\",\n  \"status\": \"queued\",\n  \"started_at\": \"1953-10-15T06:17:35.076Z\",\n  \"finished_at\": \"1999-02-08T16:06:55.367Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f1886e85-6711-441c-bbc3-5f0d80568178",
+    "name": "Modal Dicts and Queues Apps Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal and Queues Apps Dicts API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dicts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Dicts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/dicts"
+          },
+          "docs": "List Dicts"
+        },
+        {
+          "info": {
+            "name": "Create Dict",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/dicts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Dict"
+        },
+        {
+          "info": {
+            "name": "Get Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Dict Entry"
+        },
+        {
+          "info": {
+            "name": "Put Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Put Dict Entry"
+        },
+        {
+          "info": {
+            "name": "Delete Dict Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/dicts/:dict_name/entries/:key",
+            "params": [
+              {
+                "name": "dict_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Dict Entry"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

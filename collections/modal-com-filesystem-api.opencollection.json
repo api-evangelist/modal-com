@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues Apps Filesystem API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Filesystem",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read Sandbox File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/files",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Read a file inside the Sandbox at the given path."
+        },
+        {
+          "info": {
+            "name": "Write Sandbox File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/files",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Write a file inside the Sandbox at the given path."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,616 @@
+{
+  "item": [
+    {
+      "id": "ac07de2e-166d-43dd-a2e2-4a4cef42d9d6",
+      "name": "Sandboxes",
+      "description": {
+        "content": "Sandbox lifecycle and management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c958469f-4926-409e-af9b-b551288b4630",
+          "name": "List Sandboxes",
+          "request": {
+            "name": "List Sandboxes",
+            "description": {
+              "content": "List all sandboxes in the current environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "app_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9051ca14-d1c4-45a5-ae46-10d7b08c237f",
+              "name": "A page of sandboxes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"sandbox_id\": \"string\",\n      \"app_id\": \"string\",\n      \"state\": \"started\",\n      \"image\": \"string\",\n      \"gpu\": \"string\",\n      \"cpu\": 3010.8606338973987,\n      \"memory\": 9524,\n      \"timeout\": 1491,\n      \"idle_timeout\": 269,\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"created_at\": \"1967-11-13T00:15:13.195Z\"\n    },\n    {\n      \"sandbox_id\": \"string\",\n      \"app_id\": \"string\",\n      \"state\": \"started\",\n      \"image\": \"string\",\n      \"gpu\": \"string\",\n      \"cpu\": 3509.84356118215,\n      \"memory\": 8292,\n      \"timeout\": 6298,\n      \"idle_timeout\": 5967,\n      \"tags\": {\n        \"key_0\": \"string\"\n      },\n      \"created_at\": \"1955-04-25T09:35:12.103Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9cbc6a45-9f67-48a1-ac00-113a6178b31e",
+          "name": "Create Sandbox",
+          "request": {
+            "name": "Create Sandbox",
+            "description": {
+              "content": "Create a new Sandbox with the given image, resources, and\noptional entrypoint command. Sandboxes start in `Created` state\nand transition through `Scheduled`, `Started`, `Ready`, and\nterminal states.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"app_id\": \"<string>\",\n  \"image\": \"<string>\",\n  \"entrypoint\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"memory\": \"<integer>\",\n  \"gpu\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"idle_timeout\": \"<integer>\",\n  \"encrypted_ports\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"unencrypted_ports\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7b8108b-8ba3-4e8f-b95a-d33cacab0e91",
+              "name": "Sandbox created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app_id\": \"<string>\",\n  \"image\": \"<string>\",\n  \"entrypoint\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"memory\": \"<integer>\",\n  \"gpu\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"idle_timeout\": \"<integer>\",\n  \"encrypted_ports\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"unencrypted_ports\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sandbox_id\": \"string\",\n  \"app_id\": \"string\",\n  \"state\": \"scheduled\",\n  \"image\": \"string\",\n  \"gpu\": \"string\",\n  \"cpu\": 6530.858166660892,\n  \"memory\": 6342,\n  \"timeout\": 9319,\n  \"idle_timeout\": 6222,\n  \"tags\": {\n    \"key_0\": \"string\"\n  },\n  \"created_at\": \"2002-09-29T04:48:36.035Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f4991ce-5312-4c66-b8d8-6cf6e7ffb69a",
+          "name": "Get Sandbox",
+          "request": {
+            "name": "Get Sandbox",
+            "description": {
+              "content": "Retrieve a single Sandbox by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":sandbox_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c983ef3b-2e55-4330-a9f8-e6174fb24ba8",
+              "name": "The Sandbox.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":sandbox_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sandbox_id\": \"string\",\n  \"app_id\": \"string\",\n  \"state\": \"scheduled\",\n  \"image\": \"string\",\n  \"gpu\": \"string\",\n  \"cpu\": 6530.858166660892,\n  \"memory\": 6342,\n  \"timeout\": 9319,\n  \"idle_timeout\": 6222,\n  \"tags\": {\n    \"key_0\": \"string\"\n  },\n  \"created_at\": \"2002-09-29T04:48:36.035Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e87a513d-2af0-46bb-be35-d549fbef1358",
+          "name": "Terminate Sandbox",
+          "request": {
+            "name": "Terminate Sandbox",
+            "description": {
+              "content": "Terminate a Sandbox and free its resources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":sandbox_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab3971eb-80a4-4249-af4c-95c1ba9020e3",
+              "name": "Sandbox terminated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":sandbox_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83f9706b-560e-4f7d-b936-cb911dbf4289",
+          "name": "Snapshot Sandbox Filesystem",
+          "request": {
+            "name": "Snapshot Sandbox Filesystem",
+            "description": {
+              "content": "Capture the Sandbox filesystem state as a reusable image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":sandbox_id",
+                "snapshot"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6093be89-23aa-412f-a817-abc6359380de",
+              "name": "Snapshot image created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":sandbox_id",
+                    "snapshot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33c9dd1a-39ca-46f9-9c45-b0ac5cc724b0",
+          "name": "List Sandbox Tunnels",
+          "request": {
+            "name": "List Sandbox Tunnels",
+            "description": {
+              "content": "Retrieve tunnel metadata for the Sandbox keyed by container port.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":sandbox_id",
+                "tunnels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sandbox_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "77a1dcef-698c-42cd-b4ed-04f97176a25c",
+              "name": "Tunnels for the Sandbox.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":sandbox_id",
+                    "tunnels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sandbox_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"host\": \"string\",\n    \"port\": 9669,\n    \"url\": \"https://kTCgXuveolIrcbJNuntNnAZo.pamrlMyAvXn2-afrwdXht.BSc6qrKt,,qo0a.-nimSUvQwFzVi.RFFbFvx8JGhmETNv23fnQd5\"\n  },\n  \"key_1\": {\n    \"host\": \"string\",\n    \"port\": 1878,\n    \"url\": \"https://aaHJkZtBxFytIGPeqbIneKcAcbNJZeXy.xluty-S-QZG2lAhVdWcDjHdN68LIzVl1Pxeh4HxAGS1Q9gp8wdZJ,PxwZ\"\n  },\n  \"key_2\": {\n    \"host\": \"string\",\n    \"port\": 9871,\n    \"url\": \"http://AuIdQWWBqcgEFAZiIrXQFYcbghr.soNUYJxwYEZ2cZ964.PloGhAgnGUwJXOnJ5u12s7JPUBuziwyPA-fQOJe5OtXrb\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0014fd24-5625-4f18-80f4-f7709ec49dcb",
+    "name": "Modal Dicts and Queues Apps Sandboxes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

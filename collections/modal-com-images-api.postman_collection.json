@@ -1,0 +1,308 @@
+{
+  "item": [
+    {
+      "id": "53d53cb3-ce6f-4860-96d1-cb90e2a6b3ee",
+      "name": "Images",
+      "description": {
+        "content": "Container image specifications and builds.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0e7af892-c350-40da-bf34-90ae23f4e755",
+          "name": "List Images",
+          "request": {
+            "name": "List Images",
+            "description": {},
+            "url": {
+              "path": [
+                "images"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3b62221-315f-455d-b856-5e6a3960285b",
+              "name": "A page of images.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"image_id\": \"string\",\n      \"state\": \"ready\",\n      \"base\": \"string\",\n      \"python_version\": \"string\",\n      \"digest\": \"string\",\n      \"size_bytes\": 7871,\n      \"created_at\": \"1980-08-10T06:48:28.384Z\"\n    },\n    {\n      \"image_id\": \"string\",\n      \"state\": \"ready\",\n      \"base\": \"string\",\n      \"python_version\": \"string\",\n      \"digest\": \"string\",\n      \"size_bytes\": 944,\n      \"created_at\": \"2019-04-07T09:49:35.860Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69cb9ee0-0d50-4414-9efc-ca591c0ddfda",
+          "name": "Build Image",
+          "request": {
+            "name": "Build Image",
+            "description": {
+              "content": "Build a new image from a layered specification. Images can be\nconstructed from base images (debian_slim, micromamba, from_dockerfile,\nfrom_registry), with `pip_install`, `apt_install`, `run_commands`,\n`env`, `copy_local_file`, and `copy_local_dir` layers.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base\": \"<string>\",\n  \"python_version\": \"<string>\",\n  \"layers\": [\n    {\n      \"kind\": \"<string>\"\n    },\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f28ad3f0-4feb-46b2-9d77-106e6e1b1c93",
+              "name": "Image build started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base\": \"<string>\",\n  \"python_version\": \"<string>\",\n  \"layers\": [\n    {\n      \"kind\": \"<string>\"\n    },\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_id\": \"string\",\n  \"state\": \"ready\",\n  \"base\": \"string\",\n  \"python_version\": \"string\",\n  \"digest\": \"string\",\n  \"size_bytes\": 130,\n  \"created_at\": \"2018-03-18T06:45:29.604Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97d0429b-d19a-4c74-929b-941377bea530",
+          "name": "Get Image",
+          "request": {
+            "name": "Get Image",
+            "description": {},
+            "url": {
+              "path": [
+                "images",
+                ":image_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "image_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6056b1cf-8e7c-4abd-afdd-7918e77bae8d",
+              "name": "The image.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":image_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "image_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"image_id\": \"string\",\n  \"state\": \"ready\",\n  \"base\": \"string\",\n  \"python_version\": \"string\",\n  \"digest\": \"string\",\n  \"size_bytes\": 130,\n  \"created_at\": \"2018-03-18T06:45:29.604Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d41ef92e-c30f-4e28-86fd-05f78d604a87",
+    "name": "Modal Dicts and Queues Apps Images API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues Apps Execution API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Execution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute Sandbox Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.modal.com/v1/sandboxes/:sandbox_id/exec",
+            "params": [
+              {
+                "name": "sandbox_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a command inside the Sandbox. Returns a process handle\nwith streamed stdout/stderr and an eventual exit code.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

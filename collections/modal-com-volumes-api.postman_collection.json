@@ -1,0 +1,488 @@
+{
+  "item": [
+    {
+      "id": "e67b5a27-d521-4769-b2fb-ad55d30fcb9f",
+      "name": "Volumes",
+      "description": {
+        "content": "Volume lifecycle.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec187614-c49f-4efd-a50b-12c784c86aa3",
+          "name": "List Volumes",
+          "request": {
+            "name": "List Volumes",
+            "description": {
+              "content": "List all Modal Volumes in the workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d973c927-b9f5-4e7c-8b7d-10cf739ac84b",
+              "name": "A page of volumes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"volume_id\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"v1\",\n      \"created_at\": \"1968-05-19T20:12:57.928Z\",\n      \"size_bytes\": 8150,\n      \"inode_count\": 4678\n    },\n    {\n      \"volume_id\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"v2\",\n      \"created_at\": \"1996-10-29T13:09:30.288Z\",\n      \"size_bytes\": 9091,\n      \"inode_count\": 864\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94c63edc-82fb-4e08-bae6-99680372bca3",
+          "name": "Create Volume",
+          "request": {
+            "name": "Create Volume",
+            "description": {
+              "content": "Create a new named Modal Volume.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"version\": \"v2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bc208bf8-48e3-4a0c-8970-aba34ae0b542",
+              "name": "Volume created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"version\": \"v2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volume_id\": \"string\",\n  \"name\": \"string\",\n  \"version\": \"v2\",\n  \"created_at\": \"1993-09-23T22:58:08.914Z\",\n  \"size_bytes\": 325,\n  \"inode_count\": 9892\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b38b1579-06d4-42f2-a0f4-ce2aa2ef4dc5",
+          "name": "Get Volume",
+          "request": {
+            "name": "Get Volume",
+            "description": {
+              "content": "Retrieve volume metadata by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes",
+                ":volume_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volume_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3627ecfb-4873-411f-ad36-380810fe8e9b",
+              "name": "The volume.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":volume_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volume_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volume_id\": \"string\",\n  \"name\": \"string\",\n  \"version\": \"v2\",\n  \"created_at\": \"1993-09-23T22:58:08.914Z\",\n  \"size_bytes\": 325,\n  \"inode_count\": 9892\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7484b9fd-8d24-41e9-bf6e-f3d043611dbf",
+          "name": "Delete Volume",
+          "request": {
+            "name": "Delete Volume",
+            "description": {
+              "content": "Delete a Modal Volume.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes",
+                ":volume_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volume_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c690046-c299-4609-acae-5d0a13f8d613",
+              "name": "Volume deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":volume_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volume_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22ec6feb-c8eb-42a9-a115-0d8153e4685a",
+          "name": "Commit Volume Changes",
+          "request": {
+            "name": "Commit Volume Changes",
+            "description": {
+              "content": "Commit pending writes so other readers can see them after a\n`reload`. Modal recommends limiting concurrent commits to about\n5 on v1 volumes; v2 supports many more concurrent writers.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "volumes",
+                ":volume_name",
+                "commits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volume_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8837d98-0459-46fd-ae79-cb3ad4424e42",
+              "name": "Commit completed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "volumes",
+                    ":volume_name",
+                    "commits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volume_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modal.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fba6d3e7-dd09-465e-a7bb-89c941066869",
+    "name": "Modal Dicts and Queues Apps Volumes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modal Dicts and Queues — distributed in-memory primitives for\ncross-container state. Dicts are key-value stores; Queues are FIFO\nmessage queues used to coordinate work across Modal functions and\nsandboxes.\n\n\nContact Support:\n Name: Modal Labs",
+      "type": "text/plain"
+    }
+  }
+}

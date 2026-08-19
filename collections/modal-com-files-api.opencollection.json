@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Modal Dicts and Queues Apps Files API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Volume Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List files under a path inside the volume."
+        },
+        {
+          "info": {
+            "name": "Put Volume File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Upload a file to the volume at the given path."
+        },
+        {
+          "info": {
+            "name": "Remove Volume File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.modal.com/v1/volumes/:volume_name/files",
+            "params": [
+              {
+                "name": "volume_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recursive",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Remove a file or directory from the volume."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
