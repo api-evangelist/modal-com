@@ -6,6 +6,8 @@ apis:
   description: Modal App lifecycle.
   humanURL: https://modal.com/docs/guide/apps
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -242,6 +244,8 @@ apis:
   description: Volume file operations.
   humanURL: https://modal.com/docs/guide/apps
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -419,6 +423,8 @@ apis:
   description: Container image specifications and builds.
   humanURL: https://modal.com/docs/guide/apps
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -891,6 +897,8 @@ apis:
   description: HTTP/ASGI/WSGI web endpoints backed by Modal Functions.
   humanURL: https://modal.com/docs/guide/apps
   tags:
+  - Web Endpoints
+  tags_raw:
   - WebEndpoints
   properties:
   - type: OpenAPI
