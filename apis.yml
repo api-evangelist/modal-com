@@ -1054,6 +1054,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/modal-com.png
 access: 3rd-Party
 common:
+  - type: CapabilityMap
+    url: capabilities/modal-com-capability-edges.yml
+    name: Modal Business Capability Map
   - type: AgenticAccess
     url: agentic-access/modal-com-agentic-access.yml
   - type: DomainSecurity
