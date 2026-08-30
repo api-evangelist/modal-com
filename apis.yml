@@ -897,7 +897,7 @@ apis:
   description: HTTP/ASGI/WSGI web endpoints backed by Modal Functions.
   humanURL: https://modal.com/docs/guide/apps
   tags:
-  - Web Endpoints
+  - WebEndpoints
   tags_raw:
   - WebEndpoints
   properties:
